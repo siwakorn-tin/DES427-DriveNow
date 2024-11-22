@@ -5,11 +5,8 @@ import { Session } from "@supabase/supabase-js";
 import { getUser } from "../utils/user";
 import { NavigationProp } from "@react-navigation/native";
 import useUserData from "../hooks/useUserData";
+import { ProfileProps } from "../types/session";
 
-interface ProfileProps {
-  navigation: NavigationProp<any>;
-  session: Session;
-}
 const ProfileScreen: React.FC<ProfileProps> = ({ navigation, session }) => {
   const { data, loading } = useUserData(session);
 

@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
 import { NavigationProp } from "@react-navigation/native";
-import { Stack, Text, Input, Button } from 'tamagui';
+import { Stack, Text, Input, Button } from "tamagui";
+import { ProfileProps } from "../types/session";
 
-const SignUpScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
+const SignUpScreen = ({ navigation }: ProfileProps) => {
   const [firstName, setFirstName] = React.useState<string>("");
   const [lastName, setLastName] = React.useState<string>("");
   const [driverLicense, setDriverLicense] = React.useState<string>("");
@@ -133,7 +134,7 @@ const SignUpScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
       </Button>
 
       <Text fontSize="$4" color="#000">
-        Already have an account?{' '}
+        Already have an account?{" "}
         <Text
           color="#000"
           fontWeight="bold"

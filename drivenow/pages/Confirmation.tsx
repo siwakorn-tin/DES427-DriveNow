@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
+import { ProfileProps } from "../types/session";
 
-const CarRentalConfirmation: React.FC = () => {
+const CarRentalConfirmation: React.FC <ProfileProps>= ({navigation,session}) => {
   const [carModel, setCarModel] = useState<string>("Model");
   const [brandName, setBrandName] = useState<string>("Toyota");
   const [color, setColor] = useState<string>("Orange");

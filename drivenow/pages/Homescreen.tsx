@@ -2,14 +2,11 @@ import React from "react";
 import { Button, View, Text } from "tamagui";
 import { NavigationProp } from "@react-navigation/native";
 import { Session } from "@supabase/supabase-js";
+import { ProfileProps } from "../types/session";
 
 export default function HomeScreen({
-  navigation,
-  session,
-}: {
-  navigation: NavigationProp<any>;
-  session: Session;
-}) {
+navigation,session
+}:ProfileProps) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
