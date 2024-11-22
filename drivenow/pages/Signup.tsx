@@ -1,24 +1,45 @@
-import React from 'react';
+import React from "react";
 import { NavigationProp } from "@react-navigation/native";
-import { Stack, Text, Input, Button } from 'tamagui';
+import { Stack, Text, Input, Button } from "tamagui";
+import { ProfileProps } from "../types/session";
+import { createAccount } from "../utils/user";
+import { Alert, Platform } from "react-native";
 
-const SignUpScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
+const SignUpScreen = ({ navigation }: ProfileProps) => {
   const [firstName, setFirstName] = React.useState<string>("");
   const [lastName, setLastName] = React.useState<string>("");
   const [driverLicense, setDriverLicense] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
-  const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  const handleSignUp = () => {
-    console.log({
-      firstName,
-      lastName,
-      driverLicense,
-      email,
-      username,
-      password,
-    });
+  const handleSignUp = async () => {
+    if (loading) return; // Prevent multiple submissions
+
+    setLoading(true);
+    try {
+      const data = await createAccount(
+        firstName,
+        lastName,
+        driverLicense,
+        email,
+        password
+      );
+      console.log(data);
+      if (data) {
+        Alert.alert("Success", "Account created successfully");
+        navigation.navigate("Login");
+      }
+    } catch (error: any) {
+      if (Platform.OS === "web") {
+        window.alert(`Signup Error: ${error.message}`);
+      } else {
+        Alert.alert("Signup Error", error.message);
+      }
+      console.error("Error creating account:", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -88,19 +109,7 @@ const SignUpScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         marginBottom="$3"
         fontSize="$5"
       />
-      <Input
-        placeholder="Username"
-        placeholderTextColor="#A9A9A9"
-        value={username}
-        onChangeText={setUsername}
-        width="80%"
-        height="$5"
-        borderRadius="$4"
-        backgroundColor="#F5F5F5"
-        paddingHorizontal="$4"
-        marginBottom="$3"
-        fontSize="$5"
-      />
+
       <Input
         placeholder="Password"
         placeholderTextColor="#A9A9A9"
@@ -126,6 +135,7 @@ const SignUpScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         alignItems="center"
         marginBottom="$4"
         onPress={handleSignUp}
+        disabled={loading}
       >
         <Text color="#FFF" fontSize="$5" fontWeight="bold">
           Sign up
@@ -133,7 +143,7 @@ const SignUpScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
       </Button>
 
       <Text fontSize="$4" color="#000">
-        Already have an account?{' '}
+        Already have an account?{" "}
         <Text
           color="#000"
           fontWeight="bold"

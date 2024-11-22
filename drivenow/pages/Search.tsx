@@ -11,8 +11,9 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons"; // Ensure this library is installed
 import SelectDropdown from "react-native-select-dropdown"; // Import SelectDropdown
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { ProfileProps } from "../types/session";
 
-const CarRentalSearch: React.FC = () => {
+const CarRentalSearch: React.FC<ProfileProps> = ({navigation,session}) => {
   const [pickupLocation, setPickupLocation] = useState<string>("");
   const [pickupDate, setPickupDate] = useState<string>("");
   const [dropoffDate, setDropoffDate] = useState<string>("");
