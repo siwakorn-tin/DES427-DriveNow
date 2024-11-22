@@ -17,8 +17,6 @@ const LoginScreen = ({ navigation, session }: ProfileProps) => {
 
   const handleLogin = () => {
     async function handleLogin() {
-      // await supabase.auth.signOut();
-
       try {
         const { error, data } = await supabase.auth.signInWithPassword({
           email: username,
