@@ -21,7 +21,6 @@ const CarRentalSearch: React.FC = () => {
     "pickup" | "dropoff" | null
   >(null);
 
-  // Sample locations for pick-up options with icons
   const pickupLocations = [
     { title: "Bangkok", value: "bkk"},
     { title: "Chiang Mai", value: "cnx"},
@@ -29,19 +28,16 @@ const CarRentalSearch: React.FC = () => {
     { title: "Kon Kaen", value: "kkc" },
   ];
 
-  // Show Date Picker
   const showDatePicker = (picker: "pickup" | "dropoff") => {
     setCurrentPicker(picker);
     setDatePickerVisibility(true);
   };
 
-  // Hide Date Picker
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
     setCurrentPicker(null);
   };
 
-  // Handle Confirm Date
   const handleConfirm = (date: Date) => {
     const formattedDate = date.toISOString().split("T")[0]; // Format to YYYY-MM-DD
     if (currentPicker === "pickup") {
@@ -52,7 +48,6 @@ const CarRentalSearch: React.FC = () => {
     hideDatePicker();
   };
 
-  // Basic Input Validation
   const handleSearch = () => {
     if (!pickupLocation || !pickupDate || !dropoffDate) {
       Alert.alert("Missing Fields", "Please fill in all fields.");
@@ -67,7 +62,6 @@ const CarRentalSearch: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/* Title */}
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Search</Text>
         <View style={styles.subtitleContainer}>
@@ -76,23 +70,14 @@ const CarRentalSearch: React.FC = () => {
         </View>
       </View>
 
-      {/* Form */}
       <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
           <Icon name="place" size={20} color="gray" style={styles.icon} />
           <SelectDropdown
-            data={pickupLocations} // The location options
+            data={pickupLocations}
             onSelect={(selectedItem, index) =>
               setPickupLocation(selectedItem.value)
-            } // Set the selected location
-            // buttonTextAfterSelection={(selectedItem) => selectedItem.title} // Show label after selection
-            // rowTextForSelection={(item) => item.title} // Show label in the dropdown list
-            // defaultButtonText="Pick-up location"
-            // buttonStyle={styles.dropdownBtnStyle}
-            // buttonTextStyle={styles.dropdownBtnText}
-            // dropdownStyle={styles.dropdownStyle}
-            // rowStyle={styles.dropdownRowStyle}
-            // rowTextStyle={styles.dropdownRowText}
+            }
             renderButton={(selectedItem, isOpened) => {
               return (
                 <View style={styles.dropdownButtonStyle}>
@@ -104,7 +89,6 @@ const CarRentalSearch: React.FC = () => {
                   >
                     {(selectedItem && selectedItem.title) || "Pick-up location"}
                   </Text>
-                  {/* <Icon name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} /> */}
                 </View>
               );
             }}
@@ -116,7 +100,6 @@ const CarRentalSearch: React.FC = () => {
                     ...(isSelected && { backgroundColor: "#D2D9DF" }),
                   }}
                 >
-                  {/* <Icon name={item.icon} style={styles.dropdownItemIconStyle} /> */}
                   <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
                 </View>
               );
@@ -187,17 +170,10 @@ interface Styles {
   placeholderText: TextStyle;
   searchButton: ViewStyle;
   searchButtonText: TextStyle;
-  dropdownBtnStyle: ViewStyle;
-  dropdownBtnText: TextStyle;
-  dropdownStyle: ViewStyle;
-  dropdownRowStyle: ViewStyle;
-  dropdownRowText: TextStyle;
   dropdownButtonStyle: ViewStyle;
   dropdownButtonIconStyle: TextStyle;
   dropdownButtonTxtStyle: TextStyle;
-  dropdownButtonArrowStyle: TextStyle;
   dropdownItemStyle: ViewStyle;
-  dropdownItemIconStyle: TextStyle;
   dropdownItemTxtStyle: TextStyle;
 }
 
@@ -260,34 +236,6 @@ const styles = StyleSheet.create<Styles>({
     fontSize: 18,
     fontWeight: "bold",
   },
-
-  // Dropdown styles
-  dropdownBtnStyle: {
-    flex: 1,
-    backgroundColor: "#f4f4f4",
-    height: 50,
-    justifyContent: "center",
-    borderRadius: 8,
-    paddingHorizontal: 10,
-  },
-  dropdownBtnText: {
-    fontSize: 18,
-    color: "#808080",
-  },
-  dropdownStyle: {
-    backgroundColor: "white",
-    borderRadius: 8,
-    marginTop: 10,
-  },
-  dropdownRowStyle: {
-    backgroundColor: "#f4f4f4",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  dropdownRowText: {
-    fontSize: 18,
-    color: "black",
-  },
   dropdownButtonStyle: {
     flexDirection: "row",
     alignItems: "center",
@@ -301,18 +249,10 @@ const styles = StyleSheet.create<Styles>({
     fontSize: 18,
     color: "gray",
   },
-  dropdownButtonArrowStyle: {
-    marginLeft: 10,
-    fontSize: 18,
-  },
   dropdownItemStyle: {
     paddingVertical: 15,
     paddingHorizontal: 20,
     width: 500,
-  },
-  dropdownItemIconStyle: {
-    marginRight: 10,
-    fontSize: 24,
   },
   dropdownItemTxtStyle: {
     fontSize: 18,
