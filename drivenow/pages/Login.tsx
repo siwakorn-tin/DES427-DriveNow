@@ -7,7 +7,7 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image 
-          source={require('../assets/car.png')} // Make sure the file exists in the correct path
+          source={require('../assets/car_icon.png')} // Make sure the file exists in the correct path
           style={styles.logoImage}
         />
         <Text style={styles.logoText}>DriveNow</Text>
