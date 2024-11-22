@@ -3,11 +3,19 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'reac
 import { NavigationProp } from "@react-navigation/native";
 
 const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
+  const [username, setUsername] = React.useState<string>("");
+  const [password, setPassword] = React.useState<string>("");
+
+  const handleLogin = () => {
+    console.log("Username:", username);
+    console.log("Password:", password);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image 
-          source={require('../assets/car_icon.png')} // Make sure the file exists in the correct path
+          source={require('../assets/car_icon.png')}
           style={styles.logoImage}
         />
         <Text style={styles.logoText}>DriveNow</Text>
@@ -17,6 +25,8 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         style={styles.input}
         placeholder="Username"
         placeholderTextColor="#A9A9A9"
+        value={username}
+        onChangeText={setUsername}
       />
       
       <TextInput
@@ -24,9 +34,11 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         placeholder="Password"
         placeholderTextColor="#A9A9A9"
         secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
       
-      <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Log in</Text>
       </TouchableOpacity>
       
