@@ -30,6 +30,15 @@ export default function HomeScreen({
       >
         Go to Login
       </Button>
+      <Button
+        onPress={() => navigation.navigate("Search")}
+        size="$3"
+        theme="active"
+        color={"$blue7"}
+        backgroundColor={"$blue11Dark"}
+      >
+        Go to Car Rental Search
+      </Button>
     </View>
   );
 }
