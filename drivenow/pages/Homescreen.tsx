@@ -21,6 +21,15 @@ export default function HomeScreen({
       >
         Go to Profile
       </Button>
+      <Button
+        onPress={() => navigation.navigate("Login")}
+        size="$3"
+        theme="active"
+        color={"$blue7"}
+        backgroundColor={"$blue11Dark"}
+      >
+        Go to Login
+      </Button>
     </View>
   );
 }
