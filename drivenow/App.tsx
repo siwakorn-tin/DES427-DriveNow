@@ -9,6 +9,7 @@ import AboutScreen from "./pages/Profile";
 import LoginScreen from "./pages/Login";
 import SignupScreen from "./pages/Signup";
 import CarRentalSearch from "./pages/Search";
+import CarRentalConfirmation from "./pages/Confirmation";
 const Stack = createNativeStackNavigator();
 export default function App() {
   const [loaded] = useFonts({
@@ -27,6 +28,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
           <Stack.Screen name="Search" component={CarRentalSearch} />
+          <Stack.Screen name="Confirmation" component={CarRentalConfirmation} />
         </Stack.Navigator>
       </NavigationContainer>
     </TamaguiProvider>

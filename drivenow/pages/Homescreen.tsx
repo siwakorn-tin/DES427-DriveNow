@@ -39,6 +39,15 @@ export default function HomeScreen({
       >
         Go to Car Rental Search
       </Button>
+      <Button
+        onPress={() => navigation.navigate("Confirmation")}
+        size="$3"
+        theme="active"
+        color={"$blue7"}
+        backgroundColor={"$blue11Dark"}
+      >
+        Go to Car Rental Confirmation
+      </Button>
     </View>
   );
 }
