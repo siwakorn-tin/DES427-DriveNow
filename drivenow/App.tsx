@@ -3,7 +3,14 @@ import appConfig from "./tamagui.config";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeScreen, AboutScreen, LoginScreen } from "./pages";
+import {
+  HomeScreen,
+  AboutScreen,
+  LoginScreen,
+  CarRentalSearchScreen,
+  CarRentalConfirmationScreen,
+  SignupScreen,
+} from "./pages";
 
 import useSession from "./hooks/useSession";
 const Stack = createNativeStackNavigator();
@@ -21,20 +28,30 @@ export default function App() {
       ) : (
         <NavigationContainer>
           <Stack.Navigator>
-            {session ? (
-              <>
-                <Stack.Screen name="Home">
-                  {(props) => <HomeScreen {...props} session={session} />}
-                </Stack.Screen>
-                <Stack.Screen name="Profile">
-                  {(props) => <AboutScreen {...props} session={session} />}
-                </Stack.Screen>
-              </>
-            ) : (
+            <>
               <Stack.Screen name="Login">
-                {(props) => <LoginScreen {...props} />}
+                {(props) => <LoginScreen {...props} session={session} />}
               </Stack.Screen>
-            )}
+              <Stack.Screen name="Signup">
+                {(props) => <SignupScreen {...props} session={session} />}
+              </Stack.Screen>
+              <Stack.Screen name="Home">
+                {(props) => <HomeScreen {...props} session={session} />}
+              </Stack.Screen>
+              <Stack.Screen name="Profile">
+                {(props) => <AboutScreen {...props} session={session} />}
+              </Stack.Screen>
+              <Stack.Screen name="Search">
+                {(props) => (
+                  <CarRentalSearchScreen {...props} session={session} />
+                )}
+              </Stack.Screen>
+              <Stack.Screen name="Confirmation">
+                {(props) => (
+                  <CarRentalConfirmationScreen {...props} session={session} />
+                )}
+              </Stack.Screen>
+            </>
           </Stack.Navigator>
         </NavigationContainer>
       )}
