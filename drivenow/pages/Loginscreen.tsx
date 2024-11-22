@@ -3,16 +3,14 @@ import { Button, View, Text } from "tamagui";
 import { NavigationProp } from "@react-navigation/native";
 import { Session } from "@supabase/supabase-js";
 
-export default function HomeScreen({
+export default function LoginScreen({
   navigation,
-  session,
 }: {
   navigation: NavigationProp<any>;
-  session: Session;
 }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
+      <Text>Login Screen</Text>
       <Button
         onPress={() => navigation.navigate("Profile")}
         size="$3"
