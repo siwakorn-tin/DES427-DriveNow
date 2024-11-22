@@ -1,91 +1,86 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { NavigationProp } from "@react-navigation/native";
+import { Stack, Text, Input, Button } from 'tamagui';
 
 const SignUpScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Create account</Text>
+    <Stack
+      flex={1}
+      justifyContent="center"
+      alignItems="center"
+      backgroundColor="#FFFFFF"
+      paddingHorizontal="$4"
+    >
+      {/* Title */}
+      <Text fontSize="$8" fontWeight="bold" color="#000" marginBottom="$6">
+        Create account
+      </Text>
       
-      <TextInput
-        style={styles.input}
+      {/* Input Fields */}
+      <Input
         placeholder="Email"
         placeholderTextColor="#A9A9A9"
+        width="80%"
+        height="$5"
+        borderRadius="$4"
+        backgroundColor="#F5F5F5"
+        paddingHorizontal="$4"
+        marginBottom="$3"
+        fontSize="$5"
       />
-      
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Username"
         placeholderTextColor="#A9A9A9"
+        width="80%"
+        height="$5"
+        borderRadius="$4"
+        backgroundColor="#F5F5F5"
+        paddingHorizontal="$4"
+        marginBottom="$3"
+        fontSize="$5"
       />
-      
-      <TextInput
-        style={styles.input}
+      <Input
         placeholder="Password"
         placeholderTextColor="#A9A9A9"
         secureTextEntry
+        width="80%"
+        height="$5"
+        borderRadius="$4"
+        backgroundColor="#F5F5F5"
+        paddingHorizontal="$4"
+        marginBottom="$5"
+        fontSize="$5"
       />
       
-      <TouchableOpacity style={styles.signUpButton}>
-        <Text style={styles.signUpButtonText}>Sign up</Text>
-      </TouchableOpacity>
+      {/* Sign Up Button */}
+      <Button
+        width="80%"
+        height="$5"
+        backgroundColor="#000"
+        borderRadius="$4"
+        justifyContent="center"
+        alignItems="center"
+        marginBottom="$4"
+        onPress={() => console.log("Sign up pressed")}
+      >
+        <Text color="#FFF" fontSize="$5" fontWeight="bold">
+          Sign up
+        </Text>
+      </Button>
       
-      <Text style={styles.logInText}>
+      {/* Log In Link */}
+      <Text fontSize="$4" color="#000">
         Already have an account?{' '}
-        <Text style={styles.logInLink} onPress={() => navigation.navigate("Login")}>
+        <Text
+          color="#000"
+          fontWeight="bold"
+          onPress={() => navigation.navigate("Login")}
+        >
           Log in
         </Text>
       </Text>
-    </View>
+    </Stack>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 40,
-    color: '#000000',
-  },
-  input: {
-    width: '80%',
-    height: 50,
-    backgroundColor: '#F5F5F5',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    marginVertical: 10,
-    fontSize: 16,
-    color: '#000000',
-  },
-  signUpButton: {
-    width: '80%',
-    height: 50,
-    backgroundColor: '#000000',
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  signUpButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  logInText: {
-    marginTop: 20,
-    fontSize: 14,
-    color: '#000000',
-  },
-  logInLink: {
-    color: '#000000',
-    fontWeight: 'bold',
-  },
-});
 
 export default SignUpScreen;
