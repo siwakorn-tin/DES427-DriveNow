@@ -118,7 +118,7 @@ const SignUpScreen = ({ navigation }: ProfileProps) => {
         onChangeText={setPassword}
         width="80%"
         height="60"
-        borderRadius="10"
+        borderRadius="$10"
         backgroundColor="#F5F5F5"
         paddingHorizontal="$4"
         marginBottom="$5"

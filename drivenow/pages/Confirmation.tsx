@@ -84,11 +84,11 @@ const CarRentalConfirmation: React.FC <ProfileProps>= ({navigation,session}) => 
           <Text style={styles.label}>Drop-off Date:</Text> {dropoffDate}
         </Text>
         <Text style={styles.detailText}>
-        {/* <Text style={styles.label}>
+        <Text style={styles.label}>
           Duration: {(
             (new Date(dropoffDate).getTime() - new Date(pickupDate).getTime()) / (1000 * 3600 * 24)
           ).toFixed(0)} days
-        </Text> */}
+        </Text>
         </Text>
         <Text style={styles.detailText}>
           <Text style={styles.label}>Name:</Text> {name}
