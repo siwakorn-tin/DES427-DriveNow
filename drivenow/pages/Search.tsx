@@ -12,14 +12,15 @@ import Icon from "react-native-vector-icons/MaterialIcons"; // Ensure this libra
 import SelectDropdown from "react-native-select-dropdown"; // Import SelectDropdown
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { ProfileProps } from "../types/session";
+import { searchAvailableCars } from "../utils/api";
 
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 type SearchNavigationProp = NavigationProp<{
   Available: { location: string; pickupDate: string; dropoffDate: string };
 }>;
 
-const CarRentalSearch: React.FC<ProfileProps> = ({navigation,session}) => {
+const CarRentalSearch: React.FC<ProfileProps> = ({ navigation, session }) => {
   const [pickupLocation, setPickupLocation] = useState<string>("");
   const [pickupDate, setPickupDate] = useState<string>("");
   const [dropoffDate, setDropoffDate] = useState<string>("");
@@ -29,10 +30,10 @@ const CarRentalSearch: React.FC<ProfileProps> = ({navigation,session}) => {
   >(null);
 
   const pickupLocations = [
-    { title: "Bangkok", value: "bkk"},
-    { title: "Chiang Mai", value: "cnx"},
-    { title: "Phuket", value: "hkt", },
-    { title: "Kon Kaen", value: "kkc" },
+    { title: "Bangkok", value: "Bangkok" },
+    { title: "Chiang Mai", value: "Chiang Mai" },
+    { title: "Phuket", value: "Phuket" },
+    { title: "Kon Kaen", value: "Kon Kaen" },
   ];
 
   const showDatePicker = (picker: "pickup" | "dropoff") => {
@@ -55,14 +56,24 @@ const CarRentalSearch: React.FC<ProfileProps> = ({navigation,session}) => {
     hideDatePicker();
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (!pickupLocation || !pickupDate || !dropoffDate) {
       Alert.alert("Missing Fields", "Please fill in all fields.");
       return;
     }
 
+    Alert.alert(
+      "Search Submitted",
+      `Searching for rentals at ${pickupLocation} on ${pickupDate} to ${dropoffDate}`
+    );
+    const cars = await searchAvailableCars({
+      city: pickupLocation,
+      startDate: pickupDate,
+      endDate: dropoffDate,
+    });
+    console.log(cars?.length, cars);
     // Navigate to AvailableCars with the form data
-    navigation.navigate('Available', {
+    navigation.navigate("Available", {
       location: pickupLocation,
       pickupDate: pickupDate,
       dropoffDate: dropoffDate,

@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           brand: string;
           carstatus: Database["public"]["Enums"]["carstatus"];
+          city: Database["public"]["Enums"]["city"];
           color: Database["public"]["Enums"]["carcolor"];
           created_at: string;
           description: string;
@@ -23,6 +24,7 @@ export type Database = {
         Insert: {
           brand: string;
           carstatus: Database["public"]["Enums"]["carstatus"];
+          city?: Database["public"]["Enums"]["city"];
           color: Database["public"]["Enums"]["carcolor"];
           created_at?: string;
           description: string;
@@ -33,6 +35,7 @@ export type Database = {
         Update: {
           brand?: string;
           carstatus?: Database["public"]["Enums"]["carstatus"];
+          city?: Database["public"]["Enums"]["city"];
           color?: Database["public"]["Enums"]["carcolor"];
           created_at?: string;
           description?: string;
@@ -156,6 +159,7 @@ export type Database = {
         | "pink"
         | "brown";
       carstatus: "maintainance" | "available" | "broken";
+      city: "Bangkok" | "Chiang Mai" | "Phuket" | "Kon Kaen";
       rental_status: "booking" | "payment" | "successful" | "refunded";
     };
     CompositeTypes: {
@@ -260,6 +264,3 @@ export type CompositeTypes<
   : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
   ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
   : never;
-type TableName = keyof Database["public"]["Tables"];
-export type TableRow<T extends TableName> =
-  Database["public"]["Tables"][T]["Row"];
