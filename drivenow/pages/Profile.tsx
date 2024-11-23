@@ -8,6 +8,9 @@ import useUserData from "../hooks/useUserData";
 import { ProfileProps } from "../types/session";
 
 const ProfileScreen: React.FC<ProfileProps> = ({ navigation, session }) => {
+  if (!session) {
+    return <Text>Not logged in</Text>;
+  }
   const { data, loading } = useUserData(session);
 
   if (loading || !data) {
