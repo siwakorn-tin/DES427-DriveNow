@@ -1,4 +1,4 @@
-import { TamaguiProvider, View } from "@tamagui/core";
+import { TamaguiProvider, View, Text } from "@tamagui/core";
 import appConfig from "./tamagui.config";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
@@ -24,7 +24,9 @@ export default function App() {
   return (
     <TamaguiProvider config={appConfig}>
       {!loaded ? (
-        <View>Loading...</View>
+        <View>
+          <Text>Loading...</Text>
+        </View>
       ) : (
         <NavigationContainer>
           <Stack.Navigator>
