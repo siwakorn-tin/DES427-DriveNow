@@ -62,8 +62,8 @@ const SignUpScreen = ({ navigation }: ProfileProps) => {
         value={firstName}
         onChangeText={setFirstName}
         width="80%"
-        height="$5"
-        borderRadius="$4"
+        height="60"
+        borderRadius="$10"
         backgroundColor="#F5F5F5"
         paddingHorizontal="$4"
         marginBottom="$3"
@@ -75,8 +75,8 @@ const SignUpScreen = ({ navigation }: ProfileProps) => {
         value={lastName}
         onChangeText={setLastName}
         width="80%"
-        height="$5"
-        borderRadius="$4"
+        height="60"
+        borderRadius="$10"
         backgroundColor="#F5F5F5"
         paddingHorizontal="$4"
         marginBottom="$3"
@@ -89,8 +89,8 @@ const SignUpScreen = ({ navigation }: ProfileProps) => {
         value={driverLicense}
         onChangeText={setDriverLicense}
         width="80%"
-        height="$5"
-        borderRadius="$4"
+        height="60"
+        borderRadius="$10"
         backgroundColor="#F5F5F5"
         paddingHorizontal="$4"
         marginBottom="$3"
@@ -102,8 +102,8 @@ const SignUpScreen = ({ navigation }: ProfileProps) => {
         value={email}
         onChangeText={setEmail}
         width="80%"
-        height="$5"
-        borderRadius="$4"
+        height="60"
+        borderRadius="$10"
         backgroundColor="#F5F5F5"
         paddingHorizontal="$4"
         marginBottom="$3"
@@ -117,8 +117,8 @@ const SignUpScreen = ({ navigation }: ProfileProps) => {
         value={password}
         onChangeText={setPassword}
         width="80%"
-        height="$5"
-        borderRadius="$4"
+        height="60"
+        borderRadius="$10"
         backgroundColor="#F5F5F5"
         paddingHorizontal="$4"
         marginBottom="$5"
@@ -128,9 +128,9 @@ const SignUpScreen = ({ navigation }: ProfileProps) => {
       {/* Sign Up Button */}
       <Button
         width="80%"
-        height="$5"
+        height="60"
         backgroundColor="#000"
-        borderRadius="$4"
+        borderRadius="$10"
         justifyContent="center"
         alignItems="center"
         marginBottom="$4"
