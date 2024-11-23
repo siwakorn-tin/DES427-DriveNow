@@ -13,6 +13,12 @@ import SelectDropdown from "react-native-select-dropdown"; // Import SelectDropd
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { ProfileProps } from "../types/session";
 
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+
+type SearchNavigationProp = NavigationProp<{
+  Available: { location: string; pickupDate: string; dropoffDate: string };
+}>;
+
 const CarRentalSearch: React.FC<ProfileProps> = ({navigation,session}) => {
   const [pickupLocation, setPickupLocation] = useState<string>("");
   const [pickupDate, setPickupDate] = useState<string>("");
@@ -55,10 +61,12 @@ const CarRentalSearch: React.FC<ProfileProps> = ({navigation,session}) => {
       return;
     }
 
-    Alert.alert(
-      "Search Submitted",
-      `Searching for rentals at ${pickupLocation} on ${pickupDate} to ${dropoffDate}`
-    );
+    // Navigate to AvailableCars with the form data
+    navigation.navigate('Available', {
+      location: pickupLocation,
+      pickupDate: pickupDate,
+      dropoffDate: dropoffDate,
+    });
   };
 
   return (
@@ -208,8 +216,8 @@ const styles = StyleSheet.create<Styles>({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#f4f4f4",
-    borderRadius: 8,
-    height: 70,
+    borderRadius: 50,
+    height: 60,
     paddingHorizontal: 10,
     marginVertical: 10,
   },

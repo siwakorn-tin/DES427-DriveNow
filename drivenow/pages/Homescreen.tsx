@@ -10,6 +10,7 @@ navigation,session
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
+
       <Button
         onPress={() => navigation.navigate("Profile")}
         size="$3"
@@ -45,6 +46,15 @@ navigation,session
         backgroundColor={"$blue11Dark"}
       >
         Go to Car Rental Confirmation
+      </Button>
+      <Button
+        onPress={() => navigation.navigate("History")}
+        size="$3"
+        theme="active"
+        color={"$blue7"}
+        backgroundColor={"$blue11Dark"}
+      >
+        History
       </Button>
     </View>
   );
