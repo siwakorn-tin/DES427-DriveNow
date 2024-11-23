@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRoute, RouteProp } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -7,18 +8,48 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
+import { ProfileProps } from "../types/session";
 
-const CarRentalConfirmation: React.FC = () => {
-  const [carModel, setCarModel] = useState<string>("Model");
-  const [brandName, setBrandName] = useState<string>("Toyota");
-  const [color, setColor] = useState<string>("Orange");
-  const [location, setLocation] = useState<string>("Bangkok");
-  const [pickupDate, setPickupDate] = useState<string>("01/12/24");
-  const [dropoffDate, setDropoffDate] = useState<string>("05/12/24");
-  const [duration, setDuration] = useState<string>("4 Days");
-  const [name, setName] = useState<string>("Anne Eiei");
-  const [driverLicense, setDriverLicense] = useState<string>("123456789");
-  const [price, setPrice] = useState<number>(2000);
+type CarRentalRouteProp = RouteProp<
+{
+  CarRentalConfirmation: {
+    carModel: string;
+    brandName: string;
+    color: string;
+    location: string;
+    pickupDate: string;
+    dropoffDate: string;
+    price: number;
+    name: string;
+    driverLicense: string;
+  };
+  },
+  'CarRentalConfirmation'
+>;
+
+const CarRentalConfirmation: React.FC <ProfileProps>= ({navigation,session}) => {
+  const route = useRoute<CarRentalRouteProp>();
+  const {
+    carModel,
+    brandName,
+    color,
+    location,
+    pickupDate,
+    dropoffDate,
+    price,
+    name,
+    driverLicense,
+  } = route.params;
+  // const [carModel, setCarModel] = useState<string>("Model");
+  // const [brandName, setBrandName] = useState<string>("Toyota");
+  // const [color, setColor] = useState<string>("Orange");
+  // const [location, setLocation] = useState<string>("Bangkok");
+  // const [pickupDate, setPickupDate] = useState<string>("01/12/24");
+  // const [dropoffDate, setDropoffDate] = useState<string>("05/12/24");
+  // const [duration, setDuration] = useState<string>("4 Days");
+  // const [name, setName] = useState<string>("Anne Eiei");
+  // const [driverLicense, setDriverLicense] = useState<string>("123456789");
+  // const [price, setPrice] = useState<number>(2000);
 
   return (
     <View style={styles.container}>
@@ -53,7 +84,11 @@ const CarRentalConfirmation: React.FC = () => {
           <Text style={styles.label}>Drop-off Date:</Text> {dropoffDate}
         </Text>
         <Text style={styles.detailText}>
-          <Text style={styles.label}>Duration:</Text> {duration}
+        {/* <Text style={styles.label}>
+          Duration: {(
+            (new Date(dropoffDate).getTime() - new Date(pickupDate).getTime()) / (1000 * 3600 * 24)
+          ).toFixed(0)} days
+        </Text> */}
         </Text>
         <Text style={styles.detailText}>
           <Text style={styles.label}>Name:</Text> {name}

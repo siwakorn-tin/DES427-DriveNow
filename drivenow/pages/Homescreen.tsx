@@ -1,14 +1,12 @@
-// Homescreen.js
 import React from "react";
-// import { Button, View, Text } from "react-native";
 import { Button, View, Text } from "tamagui";
 import { NavigationProp } from "@react-navigation/native";
+import { Session } from "@supabase/supabase-js";
+import { ProfileProps } from "../types/session";
 
 export default function HomeScreen({
-  navigation,
-}: {
-  navigation: NavigationProp<any>;
-}) {
+navigation,session
+}:ProfileProps) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
@@ -22,7 +20,6 @@ export default function HomeScreen({
       >
         Go to Profile
       </Button>
-
       <Button
         onPress={() => navigation.navigate("Login")}
         size="$3"
@@ -32,7 +29,6 @@ export default function HomeScreen({
       >
         Go to Login
       </Button>
-      
       <Button
         onPress={() => navigation.navigate("Search")}
         size="$3"
@@ -42,7 +38,6 @@ export default function HomeScreen({
       >
         Go to Car Rental Search
       </Button>
-
       <Button
         onPress={() => navigation.navigate("Confirmation")}
         size="$3"
@@ -52,7 +47,6 @@ export default function HomeScreen({
       >
         Go to Car Rental Confirmation
       </Button>
-
       <Button
         onPress={() => navigation.navigate("History")}
         size="$3"
@@ -62,7 +56,6 @@ export default function HomeScreen({
       >
         History
       </Button>
-
     </View>
   );
 }

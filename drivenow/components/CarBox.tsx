@@ -1,15 +1,13 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { Text, YStack, XStack, Button } from 'tamagui';
-// import {MapPin} from '@tamagui/lucide-icons';
-// import * as Icon from '@tamagui/lucide-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 type CarBoxProps = {
   model: string;
   brand: string;
   location: string;
-  price: string;
+  price: number;
   image: string;
   color?: string;
   rentalDates?: string;
