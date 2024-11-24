@@ -64,7 +64,7 @@ export default function RentalHistoryScreen({
     if (session) {
       queryHistory();
     }
-  });
+  }, []);
 
   return (
     <View bg="white">
