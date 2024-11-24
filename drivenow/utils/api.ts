@@ -122,9 +122,26 @@ export const createRentals = async ({
   return { success: true, data };
 };
 export const getRentalHistory = async ({ session }: { session: Session }) => {
-  const { data, error } = await supabase
-    .from("rental")
+  const { data: user, error: userError } = await supabase
+    .from("user")
     .select("*")
-    .eq("user_id", session.user.id);
-  return data;
+    .eq("user_id", session.user.id)
+    .maybeSingle();
+
+  if (userError || !user) {
+    return { error: "User not found" };
+  }
+
+  const { data: historyItem, error } = await supabase
+    .from("rental")
+    .select(
+      `* ,cars(
+      brand,
+      model,
+      color,
+      rate
+    )`
+    )
+    .eq("user_id", user.id);
+  return { data: historyItem };
 };

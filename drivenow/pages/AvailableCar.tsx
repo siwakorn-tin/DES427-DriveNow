@@ -34,16 +34,15 @@ const AvailableCarsScreen = ({ navigation, session }: ProfileProps) => {
 
   const { data: user, loading } = useUserData(session);
   const route = useRoute<AvailableCarsRouteProp>();
-  // const { location, pickupDate, dropoffDate } = route.params;
   const { location, pickupDate, dropoffDate, cars } = route.params;
 
   const filteredCars = cars.filter((car) => {
-    const searchTerms = searchQuery.toLowerCase().replace(/\s+/g, '').split(''); // Remove spaces and split into terms
-    const carString = `${car.brand} ${car.model} ${car.color}`.toLowerCase().replace(/\s+/g, ''); // Remove spaces from car properties
+    const searchTerms = searchQuery.toLowerCase().replace(/\s+/g, '').split('');
+    const carString = `${car.brand} ${car.model} ${car.color}`.toLowerCase().replace(/\s+/g, '');
   
     return (
       car.city.toLowerCase().replace(/\s+/g, '') === location.toLowerCase().replace(/\s+/g, '') &&
-      searchTerms.every((term) => carString.includes(term)) // Check if all terms match
+      searchTerms.every((term) => carString.includes(term))
     );
   });
   
@@ -66,7 +65,6 @@ const AvailableCarsScreen = ({ navigation, session }: ProfileProps) => {
             Available cars in {location}{"\n"}from {pickupDate} to {dropoffDate}
         </Text>
 
-        {/* Search Box */}
         <Input 
             borderRadius="$10"
             borderWidth="$1"
@@ -80,7 +78,6 @@ const AvailableCarsScreen = ({ navigation, session }: ProfileProps) => {
             fontSize="$4"
         />
 
-        {/* Display filtered cars */}
         {filteredCars.map((car, index) => (
           <CarBox
             key={index}

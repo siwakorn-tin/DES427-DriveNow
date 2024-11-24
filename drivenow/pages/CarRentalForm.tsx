@@ -10,7 +10,6 @@ import useUserData from "../hooks/useUserData";
 import { UserData } from "../types/userData";
 import { createRentals, getRentalHistory } from "../utils/api";
 
-
 type RootStackParamList = {
   CarRentalForm: { 
     car: CarData 
@@ -33,8 +32,8 @@ const CarRentalFormScreen: React.FC<ProfileProps> = ({ navigation, session }) =>
     const pickupDateObj = new Date(pickup);
     const dropoffDateObj = new Date(dropoff);
     const timeDifference = dropoffDateObj.getTime() - pickupDateObj.getTime();
-    const dayDifference = timeDifference / (1000 * 3600 * 24); // Convert from milliseconds to days
-    return Math.ceil(dayDifference); // Round up to account for partial days
+    const dayDifference = timeDifference / (1000 * 3600 * 24);
+    return Math.ceil(dayDifference);
   };
 
   const duration = calculateDuration(pickupDate, dropoffDate);
@@ -55,7 +54,7 @@ const CarRentalFormScreen: React.FC<ProfileProps> = ({ navigation, session }) =>
       });
     
       if (rentalData?.success) {
-        console.log("Data inserted successfully", rentalData); // Debug log
+        console.log("Data inserted successfully", rentalData);
         Alert.alert("Success", "Booking confirmed successfully");
         navigation.navigate("Home");
         return;
@@ -71,20 +70,6 @@ const CarRentalFormScreen: React.FC<ProfileProps> = ({ navigation, session }) =>
     }
     
   };
-
-  // No Confirmation Page
-  // const handleContinue = () => {
-  
-  //   navigation.navigate('Confirmation', {
-  //     car: car,
-  //     location,
-  //     pickupDate,
-  //     dropoffDate,
-  //     price: totalPrice,
-  //     fullname: user.fullname,
-  //     license_number: user.license_number,
-  //   });
-  // };
 
   return (
     <ScrollView>
@@ -144,8 +129,8 @@ const CarRentalFormScreen: React.FC<ProfileProps> = ({ navigation, session }) =>
           fontSize="$4"
         />
         <Input
-          value={dropoffDate} // Display the dropoff date
-          editable={false} // Make it read-only
+          value={dropoffDate}
+          editable={false}
           flex={1}
           borderWidth={0}
           borderRadius="$10"
