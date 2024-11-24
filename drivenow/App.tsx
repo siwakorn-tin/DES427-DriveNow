@@ -35,12 +35,12 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator>
             <>
-              <Stack.Screen name="Login">
+              {/* <Stack.Screen name="Login">
                 {(props) => <LoginScreen {...props} session={session} />}
               </Stack.Screen>
               <Stack.Screen name="Signup">
                 {(props) => <SignupScreen {...props} session={session} />}
-              </Stack.Screen>
+              </Stack.Screen> */}
               <Stack.Screen name="Home">
                 {(props) => <HomeScreen {...props} session={session} />}
               </Stack.Screen>

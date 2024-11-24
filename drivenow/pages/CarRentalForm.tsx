@@ -4,9 +4,9 @@ import { Alert } from "react-native";
 import { CarData } from "./AvailableCar"
 import SelectDropdown from "react-native-select-dropdown"; 
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
-import { useRoute, RouteProp } from "@react-navigation/native";
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useRoute, RouteProp} from "@react-navigation/native";
 import { ProfileProps } from "../types/session";
+
 
 type RootStackParamList = {
   CarRentalForm: { 
@@ -19,14 +19,14 @@ type RootStackParamList = {
 
 type CarRentalFormScreenRouteProp = RouteProp<RootStackParamList, 'CarRentalForm'>;
 
-const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
+const CarRentalFormScreen = ({ navigation }: ProfileProps) => {
   const route = useRoute<CarRentalFormScreenRouteProp>();
   const { car, location, pickupDate, dropoffDate } = route.params;
-  const [selectedColor, setSelectedColor] = React.useState<string>("");
+  // const [selectedColor, setSelectedColor] = React.useState<string>("");
   const [name, setName] = React.useState<string>("");
   const [driverLicense, setDriverLicense] = React.useState<string>("");
   
-  const colorOption = car.colors ? car.colors.map((color) => ({ title: color })) : [];
+  // const colorOption = car.colors ? car.colors.map((color) => ({ title: color })) : [];
 
   // Function to calculate the rental duration in days
   const calculateDuration = (pickup: string, dropoff: string): number => {
@@ -38,23 +38,16 @@ const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
   };
 
   const duration = calculateDuration(pickupDate, dropoffDate);
-  const totalPrice = duration * car.price;
+  const totalPrice = duration * car.rate;
 
   const handleContinue = () => {
-    if (!selectedColor || !name || !driverLicense) {
+    if ( !name || !driverLicense ) {
       Alert.alert("Missing Fields", "Please fill in all fields.");
       return;
     }
   
     navigation.navigate('Confirmation', {
-      carModel: car.model,
-      carImage: car.image,
-      brandName: car.brand,
-      color: selectedColor,
-      location,
-      pickupDate,
-      dropoffDate,
-      price: totalPrice,
+      car: car,
       name: name,
       driverLicense: driverLicense
     });
@@ -151,55 +144,20 @@ const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
       <Text fontSize="$5" fontWeight="600" marginBottom="$2">
         Color Option
       </Text>
-
-      <View 
-        borderWidth={0}
-        borderColor="$gray7"
-        borderRadius="$10"
-        paddingHorizontal="$3"
-        marginBottom="$4"
-        bg="$gray3"
-        height="60"
-        display="flex"
-        justifyContent="center"
-        paddingInline="$4"
-      >
-      <SelectDropdown
-            data={colorOption} // The location options
-            onSelect={(selectedItem, index) =>
-              setSelectedColor(selectedItem.title)
-            }
-            renderButton={(selectedItem, isOpened) => {
-              return (
-                <View style={styles.dropdownButtonStyle}>
-                  <Text
-                    style={[
-                      styles.dropdownButtonTxtStyle,
-                      { color: selectedItem ? "black" : "#808080" },
-                    ]}
-                  >
-                    {(selectedItem && selectedItem.title) || "Color"}
-                  </Text>
-                </View>
-              );
-            }}
-            renderItem={(item, index, isSelected) => {
-              return (
-                <View
-                  style={{
-                    ...styles.dropdownItemStyle,
-                    ...(isSelected && { backgroundColor: "#D2D9DF"}),
-                  }}
-                >
-                  <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
-                </View>
-              );
-            }}
-            dropdownStyle={styles.centeredDropdownStyle}
-            showsVerticalScrollIndicator={false}
-          />
-      </View>
-
+      <Input
+          value={car.color}
+          editable={false}
+          borderWidth={0}
+          borderColor="$gray7"
+          borderRadius="$10"
+          paddingHorizontal="$3"
+          marginBottom="$4"
+          bg="$gray3"
+          height="60"
+          paddingInline="$4"
+          fontSize="$4"
+      />
+      
       {/* Your Information Fields */}
       <Text fontSize="$5" fontWeight="600" marginBottom="$2">
         Your Information

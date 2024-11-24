@@ -1,110 +1,81 @@
 import React, { useState } from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { YStack, Text, Input, View } from 'tamagui';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import CarBox from '../components/CarBox';
 import { FontAwesome } from '@expo/vector-icons';
 import { ProfileProps } from "../types/session";
 
-// Sample car data
 const cars: CarData[] = [
   {
-    model: 'AAAAA',
+    id: 1,
+    model: 'Model A',
     brand: 'Toyota',
-    location: 'Bangkok',
-    price: 1000,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['Red', 'Green', 'Blue']
+    city: 'Bangkok',
+    color: 'Red',
+    created_at: '2024-11-24',
+    description: 'A red Toyota Model A.',
+    rate: 1000,
+    carstatus: 'Available',
+    image: 'https://link-to-image.com/toyota-model-a.jpg'
   },
   {
-    model: 'BBBB',
+    id: 2,
+    model: 'Model B',
+    brand: 'Toyota',
+    city: 'Bangkok',
+    color: 'Blue',
+    created_at: '2024-11-24',
+    description: 'A blue Toyota Model B.',
+    rate: 1200,
+    carstatus: 'Available',
+    image: 'https://link-to-image.com/toyota-model-b.jpg'
+  },
+  {
+    id: 3,
+    model: 'Model A',
     brand: 'BMW',
-    location: 'Bangkok',
-    price: 1500,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['Silver', 'Gold', 'Blonde']
+    city: 'Chiang Mai',
+    color: 'Black',
+    created_at: '2024-11-24',
+    description: 'A black BMW Model A.',
+    rate: 1500,
+    carstatus: 'Available',
+    image: 'https://link-to-image.com/bmw-model-a.jpg'
   },
   {
-    model: 'CCCCCC',
-    brand: 'Nissan',
-    location: 'Bangkok',
-    price: 2000,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['Red', 'Green', 'Blue']
+    id: 4,
+    model: 'Model A',
+    brand: 'Toyota',
+    city: 'Bangkok',
+    color: 'Blue',
+    created_at: '2024-11-24',
+    description: 'A blue Toyota Model A.',
+    rate: 1000,
+    carstatus: 'Available',
+    image: 'https://link-to-image.com/toyota-model-a.jpg'
   },
-  {
-    model: 'DDDDD',
-    brand: 'Honda',
-    location: 'Chiang Mai',
-    price: 2000,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['Black', 'White', 'Gray']
-  },
-  {
-    model: 'EEEEE',
-    brand: 'Mazda',
-    location: 'Chiang Mai',
-    price: 2000,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['Blue', 'Yellow', 'Orange']
-  },
-  {
-    model: 'FFFFF',
-    brand: 'Ford',
-    location: 'Phuket',
-    price: 2000,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['Red', 'White', 'Black']
-  },
-  {
-    model: 'GGGGG',
-    brand: 'Chevrolet',
-    location: 'Phuket',
-    price: 1700,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['Gray', 'Silver', 'Green']
-  },
-  {
-    model: 'HHHHH',
-    brand: 'Mercedes',
-    location: 'Kon Kaen',
-    price: 2500,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['Gold', 'Black', 'White']
-  },
-  {
-    model: 'IIIII',
-    brand: 'Hyundai',
-    location: 'Kon Kaen',
-    price: 1300,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['Red', 'Blue', 'Silver']
-  },
-  {
-    model: 'JJJJJ',
-    brand: 'Kia',
-    location: 'Bangkok',
-    price: 1600,
-    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-    colors: ['White', 'Green', 'Black']
-  }
 ];
 
 export type CarData = {
-  model: string;
   brand: string;
-  location: string;
-  price: number;
+  carstatus: string;
+  city: string;
+  color: string;
+  created_at: string;
+  description: string;
+  id: number;
+  model: string;
+  rate: number;
   image: string;
-  colors: string[];
 };
 
 type AvailableCarsRouteProp = RouteProp<{
   AvailableCars: { 
     location: string; 
     pickupDate: string; 
-    dropoffDate: string 
+    dropoffDate: string;
+    // cars: CarData[];
   };
 }, 'AvailableCars'>;
 
@@ -113,20 +84,27 @@ const AvailableCarsScreen = ({ navigation }: ProfileProps) => {
 
   const route = useRoute<AvailableCarsRouteProp>();
   const { location, pickupDate, dropoffDate } = route.params;
-  
+  // const { location, pickupDate, dropoffDate, cars } = route.params;
 
-  // Filter cars based on search query (brand or model)
-  const filteredCars = cars.filter(
-    (car) =>
-      car.location.toLowerCase() === location.toLowerCase() && (
-        car.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        car.model.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-  );
+  const filteredCars = cars.filter((car) => {
+    const searchTerms = searchQuery.toLowerCase().replace(/\s+/g, '').split(''); // Remove spaces and split into terms
+    const carString = `${car.brand} ${car.model} ${car.color}`.toLowerCase().replace(/\s+/g, ''); // Remove spaces from car properties
   
-    const handleCarClick = (car: CarData) => {
-      navigation.navigate('RentalForm', { car, location, pickupDate, dropoffDate});
-    };
+    return (
+      car.city.toLowerCase().replace(/\s+/g, '') === location.toLowerCase().replace(/\s+/g, '') &&
+      searchTerms.every((term) => carString.includes(term)) // Check if all terms match
+    );
+  });
+  
+  
+  const handleCarClick = (car: CarData) => {
+    navigation.navigate('RentalForm', { 
+      car, 
+      location, 
+      pickupDate, 
+      dropoffDate
+    });
+  };
 
   return (
     <View bg="white" height="100%">
@@ -144,7 +122,7 @@ const AvailableCarsScreen = ({ navigation }: ProfileProps) => {
             backgroundColor="$gray1"
             height={60}
             marginBlock="$5"
-            placeholder="Search by Brand or Model"
+            placeholder="Search by Brand, Model or Color"
             value={searchQuery}
             onChangeText={setSearchQuery}
             fontSize="$4"
@@ -156,10 +134,11 @@ const AvailableCarsScreen = ({ navigation }: ProfileProps) => {
             key={index}
             model={car.model}
             brand={car.brand}
-            location={car.location}
-            price={car.price}
+            location={car.city}
+            price={car.rate}
             image={car.image}
-            onPress={() => handleCarClick(car)} // OnClick event to navigate
+            color={car.color}
+            onPress={() => handleCarClick(car)}
           />
         ))}
 

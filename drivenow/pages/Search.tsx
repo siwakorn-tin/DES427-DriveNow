@@ -77,7 +77,7 @@ const CarRentalSearch: React.FC<ProfileProps> = ({ navigation, session }) => {
       location: pickupLocation,
       pickupDate: pickupDate,
       dropoffDate: dropoffDate,
-      cars: cars,
+      // cars: cars,
     });
   };
 
