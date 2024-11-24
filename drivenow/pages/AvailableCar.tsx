@@ -85,7 +85,8 @@ const AvailableCarsScreen = ({ navigation, session }: ProfileProps) => {
             brand={car.brand}
             location={car.city}
             price={car.rate}
-            image={car.image}
+            image={"https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg"}
+            // image={car.image}
             color={car.color}
             onPress={() => handleCarClick(car)}
           />

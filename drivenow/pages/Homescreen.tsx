@@ -8,15 +8,23 @@ export default function HomeScreen({
 navigation,session
 }:ProfileProps) {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
+    <View padding="$6" bg="white" style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text fontSize="$8" fontWeight="bold" marginVertical="$5">
+        Home Screen
+      </Text>
 
       <Button
         onPress={() => navigation.navigate("Profile")}
         size="$3"
         theme="active"
-        color={"$blue7"}
-        backgroundColor={"$blue11Dark"}
+        color="white"
+        backgroundColor={"black"}
+        height="60"
+        paddingInline="$4"
+        borderRadius="$10"
+        marginBottom="$4"
+        width="100%"
+        fontSize="$4"
       >
         Go to Profile
       </Button>
@@ -24,8 +32,14 @@ navigation,session
         onPress={() => navigation.navigate("Search")}
         size="$3"
         theme="active"
-        color={"$blue7"}
-        backgroundColor={"$blue11Dark"}
+        color="white"
+        backgroundColor={"black"}
+        height="60"
+        paddingInline="$4"
+        borderRadius="$10"
+        marginBottom="$4"
+        width="100%"
+        fontSize="$4"
       >
         Go to Car Rental Search
       </Button>
@@ -33,10 +47,16 @@ navigation,session
         onPress={() => navigation.navigate("History")}
         size="$3"
         theme="active"
-        color={"$blue7"}
-        backgroundColor={"$blue11Dark"}
+        color="white"
+        backgroundColor={"black"}
+        height="60"
+        paddingInline="$4"
+        borderRadius="$10"
+        marginBottom="$4"
+        width="100%"
+        fontSize="$4"
       >
-        Go to Car History
+        Go to Car Rental History
       </Button>
     </View>
   );
