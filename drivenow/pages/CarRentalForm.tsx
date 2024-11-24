@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View ,ScrollView, XStack, YStack, Text, Input, Image, Button, Select } from "tamagui";
-import { useRoute } from "@react-navigation/native";
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { RouteProp } from "@react-navigation/native";
 import { Alert } from "react-native";
 import { CarData } from "./AvailableCar"
 import SelectDropdown from "react-native-select-dropdown"; 
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
+import { useRoute, RouteProp } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { ProfileProps } from "../types/session";
 
 type RootStackParamList = {
   CarRentalForm: { 
@@ -17,25 +17,25 @@ type RootStackParamList = {
   };
 };
 
-type CarRentalFormNavigationProp = NavigationProp<{
-  Confirmation: {
-    carModel: string,
-    brandName: string,
-    color: string
-    location: string,
-    pickupDate: string,
-    dropoffDate: string,
-    price: number,
-    name: string,
-    driverLicense: string,
-  };
-}>;
+// type CarRentalFormNavigationProp = NavigationProp<{
+//   Confirmation: {
+//     carModel: string,
+//     brandName: string,
+//     color: string
+//     location: string,
+//     pickupDate: string,
+//     dropoffDate: string,
+//     price: number,
+//     name: string,
+//     driverLicense: string,
+//   };
+// }>;
 
 type CarRentalFormScreenRouteProp = RouteProp<RootStackParamList, 'CarRentalForm'>;
 
-const CarRentalFormScreen = () => {
+const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
   const route = useRoute<CarRentalFormScreenRouteProp>();
-  const navigation = useNavigation<CarRentalFormNavigationProp>();
+  // const navigation = useNavigation<CarRentalFormNavigationProp>();
   const { car, location, pickupDate, dropoffDate } = route.params;
   const [selectedColor, setSelectedColor] = React.useState<string>("");
   const [name, setName] = React.useState<string>("");

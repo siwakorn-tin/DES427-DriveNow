@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ScrollView
 } from "react-native";
 import { ProfileProps } from "../types/session";
 
@@ -15,6 +16,7 @@ type CarRentalRouteProp = RouteProp<
   CarRentalConfirmation: {
     carModel: string;
     brandName: string;
+    carImage: string
     color: string;
     location: string;
     pickupDate: string;
@@ -32,6 +34,7 @@ const CarRentalConfirmation: React.FC <ProfileProps>= ({navigation,session}) => 
   const {
     carModel,
     brandName,
+    carImage,
     color,
     location,
     pickupDate,
@@ -40,26 +43,17 @@ const CarRentalConfirmation: React.FC <ProfileProps>= ({navigation,session}) => 
     name,
     driverLicense,
   } = route.params;
-  // const [carModel, setCarModel] = useState<string>("Model");
-  // const [brandName, setBrandName] = useState<string>("Toyota");
-  // const [color, setColor] = useState<string>("Orange");
-  // const [location, setLocation] = useState<string>("Bangkok");
-  // const [pickupDate, setPickupDate] = useState<string>("01/12/24");
-  // const [dropoffDate, setDropoffDate] = useState<string>("05/12/24");
-  // const [duration, setDuration] = useState<string>("4 Days");
-  // const [name, setName] = useState<string>("Anne Eiei");
-  // const [driverLicense, setDriverLicense] = useState<string>("123456789");
-  // const [price, setPrice] = useState<number>(2000);
 
   return (
     <View style={styles.container}>
+      <ScrollView>
       {/* Header */}
       <Text style={styles.header}>Car Rental Confirmation</Text>
 
       {/* Car Image */}
       <Image
         style={styles.carImage}
-        source={{ uri: "https://via.placeholder.com/300" }} // Replace with the actual car image URL
+        source={{ uri: carImage }} // Replace with the actual car image URL
       />
 
       {/* Details Section */}
@@ -109,6 +103,7 @@ const CarRentalConfirmation: React.FC <ProfileProps>= ({navigation,session}) => 
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
       </View>
+    </ScrollView>
     </View>
   );
 };

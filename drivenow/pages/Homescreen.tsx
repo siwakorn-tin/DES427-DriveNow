@@ -54,7 +54,7 @@ navigation,session
         color={"$blue7"}
         backgroundColor={"$blue11Dark"}
       >
-        History
+        Go to Car History
       </Button>
     </View>
   );
