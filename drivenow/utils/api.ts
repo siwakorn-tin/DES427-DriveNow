@@ -64,33 +64,62 @@ export const searchAvailableCars = async ({
 export const createRentals = async ({
   session,
   carID,
-  endDate,
   startDate,
+  endDate,
 }: {
   session: Session;
   carID: number;
   startDate: string;
   endDate: string;
 }) => {
-  const checkRental = await supabase
+  // Fetch the user from the database
+  const { data: user, error: userError } = await supabase
+    .from("user")
+    .select("*")
+    .eq("user_id", session.user.id)
+    .maybeSingle();
+
+  if (userError || !user) {
+    return { error: "User not found" };
+  }
+
+  // Check if the car is already rented for the given period
+  const { data: rental, error: rentalError } = await supabase
     .from("rental")
     .select()
     .eq("car_id", carID)
     .or("status.eq.ongoing, status.eq.payment")
     .gte("returned_date", startDate)
     .lte("rented_date", endDate)
-    .single();
-  if (checkRental && checkRental.data && checkRental.data.id)
+    .maybeSingle();
+
+  if (rentalError) {
+    return { error: rentalError.message };
+  }
+
+  if (rental && rental.id) {
     return { error: "Car is already rented for this period" };
-  await supabase.from("rental").insert([
-    {
-      user_id: Number(session.user.id),
-      car_id: carID,
-      rented_date: startDate,
-      returned_date: endDate,
-      status: "payment",
-    },
-  ]);
+  }
+
+  // Insert the new rental record
+  const { data, error } = await supabase
+    .from("rental")
+    .insert([
+      {
+        user_id: user.id,
+        car_id: carID,
+        rented_date: startDate,
+        returned_date: endDate,
+        status: "payment",
+      },
+    ])
+    .select();
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  return { data };
 };
 export const getRentalHistory = async ({ session }: { session: Session }) => {
   const { data, error } = await supabase
