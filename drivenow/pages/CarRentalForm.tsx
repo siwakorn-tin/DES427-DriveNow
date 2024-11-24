@@ -71,11 +71,6 @@ const CarRentalFormScreen: React.FC<ProfileProps> = ({
       return;
     }
     if (session) {
-      const { data: rentalHistory } = await getRentalHistory({
-        session: session,
-      });
-      console.log(rentalHistory);
-
       const { data, error } = await createRentals({
         carID: 3,
         startDate: "2024-11-24",
