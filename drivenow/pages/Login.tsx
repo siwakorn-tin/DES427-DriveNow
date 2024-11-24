@@ -23,7 +23,7 @@ const LoginScreen = ({ navigation, session }: ProfileProps) => {
           password: password,
         });
         if (data.user !== null) {
-          navigation.navigate("Home");
+          navigation.navigate("Search");
         }
         if (error) throw error;
       } catch (error: any) {
