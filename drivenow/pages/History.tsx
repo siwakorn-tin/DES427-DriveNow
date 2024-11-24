@@ -1,89 +1,113 @@
-import React, { useEffect } from "react";
-import { ScrollView } from "react-native";
-import { YStack, View } from "tamagui";
-import CarBox from "../components/CarBox";
-import { ProfileProps } from "../types/session";
+import React, { useEffect, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
 import { getRentalHistory } from "../utils/api";
-type RentalData = {
-  model: string;
-  brand: string;
-  location: string;
-  price: number;
-  image: string;
-  color: string;
-  rentalDates: string;
-};
+import { ProfileProps } from "../types/session";
 
-const rentals: RentalData[] = [
-  {
-    model: "Model",
-    brand: "Name of Brand",
-    location: "Bangkok",
-    price: 1000,
-    image:
-      "https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg",
-    color: "Orange",
-    rentalDates: "01/12/24 - 03/12/24",
-  },
-  {
-    model: "Model",
-    brand: "Name of Brand",
-    location: "Bangkok",
-    price: 1000,
-    image:
-      "https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg",
-    color: "Orange",
-    rentalDates: "01/12/24 - 03/12/24",
-  },
-  {
-    model: "Model",
-    brand: "Name of Brand",
-    location: "Bangkok",
-    price: 1000,
-    image:
-      "https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg",
-    color: "Orange",
-    rentalDates: "01/12/24 - 03/12/24",
-  },
-];
+export default function RentalHistoryScreen({ navigation, session }: ProfileProps) {
+  const [rentals, setRentals] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-export default function RentalHistoryScreen({
-  navigation,
-  session,
-}: ProfileProps) {
   async function queryHistory() {
-    if (session != null) {
-      const { data: rentalHistory } = await getRentalHistory({
-        session: session,
-      });
-      console.log(rentalHistory);
+    try {
+      if (session) {
+        const { data: rentalHistory, error } = await getRentalHistory({ session });
+
+        if (error) {
+          console.error("Error fetching rental history:", error);
+          setError("Failed to load rental history.");
+        } else if (rentalHistory) {
+          setRentals(rentalHistory);
+        }
+      }
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      setError("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
     }
   }
 
+  // Function to calculate duration and total price
+  const calculateDurationAndPrice = (rentedDate: string, returnedDate: string | null, rate: number) => {
+    const startDate = new Date(rentedDate);
+    const endDate = new Date(returnedDate || Date.now()); // Use current date if not returned
+    const duration = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)); // Convert ms to days
+    const totalPrice = duration * rate;
+    return { duration, totalPrice };
+  };
+
   useEffect(() => {
-    if (session) {
-      queryHistory();
-    }
-  }, []);
+    queryHistory();
+  }, [session]);
 
   return (
-    <View bg="white">
+    <View style={{ flex: 1, backgroundColor: "white", padding: 16 }}>
       <ScrollView>
-        <YStack paddingBlock="$6" paddingInline="$5">
-          {rentals.map((rental, index) => (
-            <CarBox
-              key={index}
-              model={rental.model}
-              brand={rental.brand}
-              location={rental.location}
-              price={rental.price}
-              image={rental.image}
-              color={rental.color}
-              rentalDates={rental.rentalDates}
-              isClickable={false}
-            />
-          ))}
-        </YStack>
+        {loading ? (
+          <Text>Loading...</Text>
+        ) : error ? (
+          <Text style={{ color: "red" }}>{error}</Text>
+        ) : rentals.length === 0 ? (
+          <Text>No rental history found</Text>
+        ) : (
+          rentals.map((rental, index) => {
+            const car = rental.cars;
+            if (car) {
+              const { duration, totalPrice } = calculateDurationAndPrice(
+                rental.rented_date,
+                rental.returned_date,
+                car.rate
+              );
+
+              return (
+                <View
+                  key={index}
+                  style={{
+                    padding: 12,
+                    marginBottom: 12,
+                    borderBottomWidth: 1,
+                    borderColor: "#eee",
+                  }}
+                >
+                  <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                    {`${car.brand || "Unknown"} ${car.model || ""}`.trim()}
+                  </Text>
+                  <Text>Color: {car.color || "N/A"}</Text>
+                  <Text>Rented Date: {rental.rented_date || "N/A"}</Text>
+                  <Text>
+                    Expected Return Date: {rental.returned_date || "Not returned"}
+                  </Text>
+                  <Text>Duration: {duration} days</Text>
+                  <Text>Rate: ฿{car.rate || "N/A"}/day</Text>
+                  <Text>Total Price: ฿{totalPrice}</Text>
+                  <Text>Status: {rental.status || "Unknown"}</Text>
+                </View>
+              );
+            } else {
+              return (
+                <View
+                  key={index}
+                  style={{
+                    padding: 12,
+                    marginBottom: 12,
+                    borderBottomWidth: 1,
+                    borderColor: "#eee",
+                  }}
+                >
+                  <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                    Car information unavailable
+                  </Text>
+                  <Text>Rented Date: {rental.rented_date || "N/A"}</Text>
+                  <Text>
+                    Expected Return Date: {rental.returned_date || "Not returned"}
+                  </Text>
+                  <Text>Status: {rental.status || "Unknown"}</Text>
+                </View>
+              );
+            }
+          })
+        )}
       </ScrollView>
     </View>
   );

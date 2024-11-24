@@ -244,7 +244,7 @@ const styles = StyleSheet.create<Styles>({
   searchButton: {
     backgroundColor: "black",
     paddingVertical: 15,
-    borderRadius: 8,
+    borderRadius: 50,
     alignItems: "center",
   },
   searchButtonText: {

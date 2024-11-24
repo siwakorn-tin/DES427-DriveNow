@@ -88,7 +88,7 @@ export const createRentals = async ({
     .from("rental")
     .select()
     .eq("car_id", carID)
-    .or("status.eq.ongoing, status.eq.payment,status.eq.successful")
+    .or("status.eq.ongoing, status.eq.payment")
     .gte("returned_date", startDate)
     .lte("rented_date", endDate)
     .maybeSingle();
@@ -110,7 +110,7 @@ export const createRentals = async ({
         car_id: carID,
         rented_date: startDate,
         returned_date: endDate,
-        status: "successful",
+        status: "payment",
       },
     ])
     .select();
@@ -119,7 +119,7 @@ export const createRentals = async ({
     return { error: error.message };
   }
 
-  return { data };
+  return { success: true, data };
 };
 export const getRentalHistory = async ({ session }: { session: Session }) => {
   const { data: user, error: userError } = await supabase
