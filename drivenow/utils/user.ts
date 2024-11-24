@@ -1,6 +1,6 @@
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "./supabase";
-import { Database, TableRow } from "../types/database.types";
+import { Database } from "../types/database.types";
 export const getUser = async (session: Session) => {
   const { data, error } = await supabase
     .from("user")

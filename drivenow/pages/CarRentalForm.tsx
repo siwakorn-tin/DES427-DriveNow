@@ -19,7 +19,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { ProfileProps } from "../types/session";
 import useUserData from "../hooks/useUserData";
 import { UserData } from "../types/userData";
-import { createRentals } from "../utils/api";
+import { createRentals, getRentalHistory } from "../utils/api";
 
 type RootStackParamList = {
   CarRentalForm: {
@@ -71,6 +71,11 @@ const CarRentalFormScreen: React.FC<ProfileProps> = ({
       return;
     }
     if (session) {
+      const { data: rentalHistory } = await getRentalHistory({
+        session: session,
+      });
+      console.log(rentalHistory);
+
       const { data, error } = await createRentals({
         carID: 3,
         startDate: "2024-11-24",
