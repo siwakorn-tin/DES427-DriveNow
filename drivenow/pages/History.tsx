@@ -1,13 +1,14 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { YStack } from 'tamagui';
+import { YStack, View } from 'tamagui';
 import CarBox from '../components/CarBox';
+import { ProfileProps } from "../types/session";
 
 type RentalData = {
   model: string;
   brand: string;
   location: string;
-  price: string;
+  price: number;
   image: string;
   color: string;
   rentalDates: string;
@@ -18,7 +19,7 @@ const rentals: RentalData[] = [
       model: 'Model',
       brand: 'Name of Brand',
       location: 'Bangkok',
-      price: '1,000',
+      price: 1000,
       image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
       color: 'Orange',
       rentalDates: '01/12/24 - 03/12/24',
@@ -27,7 +28,7 @@ const rentals: RentalData[] = [
         model: 'Model',
         brand: 'Name of Brand',
         location: 'Bangkok',
-        price: '1,000',
+        price: 1000,
         image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
         color: 'Orange',
         rentalDates: '01/12/24 - 03/12/24',   
@@ -36,15 +37,16 @@ const rentals: RentalData[] = [
         model: 'Model',
         brand: 'Name of Brand',
         location: 'Bangkok',
-        price: '1,000',
+        price: 1000,
         image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
         color: 'Orange',
         rentalDates: '01/12/24 - 03/12/24',   
     }
 ];
 
-export default function RentalHistoryScreen(){
+export default function RentalHistoryScreen({ navigation, session }: ProfileProps){
     return (
+        <View bg="white">
         <ScrollView>
         <YStack paddingBlock="$6" paddingInline="$5">
           {rentals.map((rental, index) => (
@@ -62,6 +64,7 @@ export default function RentalHistoryScreen(){
           ))}
         </YStack>
       </ScrollView>
+      </View>
     );
 }
 

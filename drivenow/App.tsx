@@ -10,6 +10,10 @@ import {
   CarRentalSearchScreen,
   CarRentalConfirmationScreen,
   SignupScreen,
+  AvailableCarsScreen,
+  CarRentalFormScreen,
+  RentalHistoryScreen,
+
 } from "./pages";
 
 import useSession from "./hooks/useSession";
@@ -42,6 +46,15 @@ export default function App() {
               </Stack.Screen>
               <Stack.Screen name="Profile">
                 {(props) => <AboutScreen {...props} session={session} />}
+              </Stack.Screen>
+              <Stack.Screen name="Available">
+                {(props) => <AvailableCarsScreen {...props} session={session} />}
+              </Stack.Screen>
+              <Stack.Screen name="RentalForm">
+                {(props) => <CarRentalFormScreen {...props} session={session} />}
+              </Stack.Screen>
+              <Stack.Screen name="History">
+                {(props) => <RentalHistoryScreen {...props} session={session} />}
               </Stack.Screen>
               <Stack.Screen name="Search">
                 {(props) => (

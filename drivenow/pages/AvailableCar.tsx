@@ -5,6 +5,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import CarBox from '../components/CarBox';
 import { FontAwesome } from '@expo/vector-icons';
+import { ProfileProps } from "../types/session";
 
 // Sample car data
 const cars: CarData[] = [
@@ -99,16 +100,6 @@ export type CarData = {
   colors: string[];
 };
 
-type AvailableCarsNavigationProp = NavigationProp<{
-    RentalForm: { 
-      car: CarData
-      location: string; 
-      pickupDate: string; 
-      dropoffDate: string
-    };
-    History: undefined;
-  }>;
-
 type AvailableCarsRouteProp = RouteProp<{
   AvailableCars: { 
     location: string; 
@@ -117,9 +108,8 @@ type AvailableCarsRouteProp = RouteProp<{
   };
 }, 'AvailableCars'>;
 
-const AvailableCarsScreen = () => {
+const AvailableCarsScreen = ({ navigation }: ProfileProps) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const navigation = useNavigation<AvailableCarsNavigationProp>();
 
   const route = useRoute<AvailableCarsRouteProp>();
   const { location, pickupDate, dropoffDate } = route.params;
