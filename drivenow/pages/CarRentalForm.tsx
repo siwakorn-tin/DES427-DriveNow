@@ -19,7 +19,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { ProfileProps } from "../types/session";
 import useUserData from "../hooks/useUserData";
 import { UserData } from "../types/userData";
-import { createRentals } from "../utils/api";
+import { createRentals, getRentalHistory } from "../utils/api";
 
 type RootStackParamList = {
   CarRentalForm: {
