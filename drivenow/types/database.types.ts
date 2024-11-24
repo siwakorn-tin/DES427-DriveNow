@@ -48,7 +48,6 @@ export type Database = {
       rental: {
         Row: {
           car_id: number;
-          expected_returned_date: string;
           id: number;
           rented_date: string;
           returned_date: string;
@@ -58,7 +57,6 @@ export type Database = {
         };
         Insert: {
           car_id: number;
-          expected_returned_date: string;
           id?: number;
           rented_date: string;
           returned_date: string;
@@ -68,7 +66,6 @@ export type Database = {
         };
         Update: {
           car_id?: number;
-          expected_returned_date?: string;
           id?: number;
           rented_date?: string;
           returned_date?: string;
@@ -160,7 +157,12 @@ export type Database = {
         | "brown";
       carstatus: "maintainance" | "available" | "broken";
       city: "Bangkok" | "Chiang Mai" | "Phuket" | "Kon Kaen";
-      rental_status: "booking" | "payment" | "successful" | "refunded";
+      rental_status:
+        | "booking"
+        | "payment"
+        | "successful"
+        | "refunded"
+        | "ongoing";
     };
     CompositeTypes: {
       [_ in never]: never;

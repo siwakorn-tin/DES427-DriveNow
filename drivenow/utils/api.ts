@@ -85,7 +85,6 @@ export const createRentals = async ({
   await supabase.from("rental").insert([
     {
       user_id: Number(session.user.id),
-      expected_returned_date: endDate,
       car_id: carID,
       rented_date: startDate,
       returned_date: endDate,
