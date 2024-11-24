@@ -1,6 +1,6 @@
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "./supabase";
-import { Database, TableRow } from "../types/database.types";
+import { Database } from "../types/database.types";
 export const getUser = async (session: Session) => {
   const { data, error } = await supabase
     .from("user")
@@ -15,18 +15,19 @@ export const getUser = async (session: Session) => {
 };
 export const getRecord = async (session: Session) => {
   const user = await getUser(session);
-  const { data, error } = await supabase
-    .from("rental")
-    .select("*")
-    .eq("id", user.id)
-    .single();
-
-  if (error) {
-    console.error("Error fetching profile:", error.message);
-    return null;
+  if (user) {
+    const { data, error } = await supabase
+      .from("rental")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+    if (error) {
+      console.error("Error fetching profile:", error.message);
+      return null;
+    }
+    return data;
   }
-
-  return data;
+  return null;
 };
 export const createAccount = async (
   firstName: string,

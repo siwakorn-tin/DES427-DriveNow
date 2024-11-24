@@ -18,6 +18,7 @@ export type Database = {
           created_at: string;
           description: string;
           id: number;
+          image_url: string | null;
           model: string;
           rate: number;
         };
@@ -29,6 +30,7 @@ export type Database = {
           created_at?: string;
           description: string;
           id?: number;
+          image_url?: string | null;
           model: string;
           rate: number;
         };
@@ -40,6 +42,7 @@ export type Database = {
           created_at?: string;
           description?: string;
           id?: number;
+          image_url?: string | null;
           model?: string;
           rate?: number;
         };
@@ -51,7 +54,6 @@ export type Database = {
           id: number;
           rented_date: string;
           returned_date: string;
-          staff_returned_id: number | null;
           status: Database["public"]["Enums"]["rental_status"];
           user_id: number;
         };
@@ -60,7 +62,6 @@ export type Database = {
           id?: number;
           rented_date: string;
           returned_date: string;
-          staff_returned_id?: number | null;
           status: Database["public"]["Enums"]["rental_status"];
           user_id: number;
         };
@@ -69,7 +70,6 @@ export type Database = {
           id?: number;
           rented_date?: string;
           returned_date?: string;
-          staff_returned_id?: number | null;
           status?: Database["public"]["Enums"]["rental_status"];
           user_id?: number;
         };
@@ -82,13 +82,6 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "rental_staff_returned_id_fkey";
-            columns: ["staff_returned_id"];
-            isOneToOne: false;
-            referencedRelation: "staff";
-            referencedColumns: ["id"];
-          },
-          {
             foreignKeyName: "rental_user_id_fkey";
             columns: ["user_id"];
             isOneToOne: false;
@@ -96,24 +89,6 @@ export type Database = {
             referencedColumns: ["id"];
           }
         ];
-      };
-      staff: {
-        Row: {
-          fullname: string;
-          id: number;
-          role: string;
-        };
-        Insert: {
-          fullname: string;
-          id?: number;
-          role: string;
-        };
-        Update: {
-          fullname?: string;
-          id?: number;
-          role?: string;
-        };
-        Relationships: [];
       };
       user: {
         Row: {
