@@ -8,7 +8,7 @@ import { useRoute, RouteProp} from "@react-navigation/native";
 import { ProfileProps } from "../types/session";
 import useUserData from "../hooks/useUserData";
 import { UserData } from "../types/userData";
-import { createRentals } from "../utils/api";
+import { createRentals, getRentalHistory } from "../utils/api";
 
 
 type RootStackParamList = {
@@ -53,20 +53,23 @@ const CarRentalFormScreen: React.FC<ProfileProps> = ({ navigation, session }) =>
         startDate: pickupDate,
         endDate: dropoffDate,
       });
-  
+    
+      if (rentalData?.success) {
+        console.log("Data inserted successfully", rentalData); // Debug log
+        Alert.alert("Success", "Booking confirmed successfully");
+        navigation.navigate("Home");
+        return;
+      }
+    
       if (rentalData?.error) {
         Alert.alert("Error", rentalData.error);
         return;
       }
-  
-      if (rentalData?.success) {
-        Alert.alert("Success", "Booking confirmed successfully");
-        navigation.navigate("Home");
-      }
     } catch (error) {
-      console.error("Error confirming booking", error);
+      console.error("Unexpected error:", error);
       Alert.alert("Error", "An unexpected error occurred. Please try again.");
     }
+    
   };
 
   // No Confirmation Page

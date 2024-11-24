@@ -18,6 +18,7 @@ export type Database = {
           created_at: string;
           description: string;
           id: number;
+          image_url: string | null;
           model: string;
           rate: number;
         };
@@ -29,6 +30,7 @@ export type Database = {
           created_at?: string;
           description: string;
           id?: number;
+          image_url?: string | null;
           model: string;
           rate: number;
         };
@@ -40,6 +42,7 @@ export type Database = {
           created_at?: string;
           description?: string;
           id?: number;
+          image_url?: string | null;
           model?: string;
           rate?: number;
         };
@@ -48,31 +51,25 @@ export type Database = {
       rental: {
         Row: {
           car_id: number;
-          expected_returned_date: string;
           id: number;
           rented_date: string;
           returned_date: string;
-          staff_returned_id: number | null;
           status: Database["public"]["Enums"]["rental_status"];
           user_id: number;
         };
         Insert: {
           car_id: number;
-          expected_returned_date: string;
           id?: number;
           rented_date: string;
           returned_date: string;
-          staff_returned_id?: number | null;
           status: Database["public"]["Enums"]["rental_status"];
           user_id: number;
         };
         Update: {
           car_id?: number;
-          expected_returned_date?: string;
           id?: number;
           rented_date?: string;
           returned_date?: string;
-          staff_returned_id?: number | null;
           status?: Database["public"]["Enums"]["rental_status"];
           user_id?: number;
         };
@@ -85,13 +82,6 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "rental_staff_returned_id_fkey";
-            columns: ["staff_returned_id"];
-            isOneToOne: false;
-            referencedRelation: "staff";
-            referencedColumns: ["id"];
-          },
-          {
             foreignKeyName: "rental_user_id_fkey";
             columns: ["user_id"];
             isOneToOne: false;
@@ -99,24 +89,6 @@ export type Database = {
             referencedColumns: ["id"];
           }
         ];
-      };
-      staff: {
-        Row: {
-          fullname: string;
-          id: number;
-          role: string;
-        };
-        Insert: {
-          fullname: string;
-          id?: number;
-          role: string;
-        };
-        Update: {
-          fullname?: string;
-          id?: number;
-          role?: string;
-        };
-        Relationships: [];
       };
       user: {
         Row: {
@@ -160,7 +132,12 @@ export type Database = {
         | "brown";
       carstatus: "maintainance" | "available" | "broken";
       city: "Bangkok" | "Chiang Mai" | "Phuket" | "Kon Kaen";
-      rental_status: "booking" | "payment" | "successful" | "refunded";
+      rental_status:
+        | "booking"
+        | "payment"
+        | "successful"
+        | "refunded"
+        | "ongoing";
     };
     CompositeTypes: {
       [_ in never]: never;
