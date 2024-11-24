@@ -7,108 +7,104 @@ import CarBox from '../components/CarBox';
 import { FontAwesome } from '@expo/vector-icons';
 import { ProfileProps } from "../types/session";
 
-// // Sample car data
-// const cars: CarData[] = [
-//   {
-//     model: 'AAAAA',
-//     brand: 'Toyota',
-//     location: 'Bangkok',
-//     price: 1000,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['Red', 'Green', 'Blue']
-//   },
-//   {
-//     model: 'BBBB',
-//     brand: 'BMW',
-//     location: 'Bangkok',
-//     price: 1500,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['Silver', 'Gold', 'Blonde']
-//   },
-//   {
-//     model: 'CCCCCC',
-//     brand: 'Nissan',
-//     location: 'Bangkok',
-//     price: 2000,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['Red', 'Green', 'Blue']
-//   },
-//   {
-//     model: 'DDDDD',
-//     brand: 'Honda',
-//     location: 'Chiang Mai',
-//     price: 2000,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['Black', 'White', 'Gray']
-//   },
-//   {
-//     model: 'EEEEE',
-//     brand: 'Mazda',
-//     location: 'Chiang Mai',
-//     price: 2000,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['Blue', 'Yellow', 'Orange']
-//   },
-//   {
-//     model: 'FFFFF',
-//     brand: 'Ford',
-//     location: 'Phuket',
-//     price: 2000,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['Red', 'White', 'Black']
-//   },
-//   {
-//     model: 'GGGGG',
-//     brand: 'Chevrolet',
-//     location: 'Phuket',
-//     price: 1700,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['Gray', 'Silver', 'Green']
-//   },
-//   {
-//     model: 'HHHHH',
-//     brand: 'Mercedes',
-//     location: 'Kon Kaen',
-//     price: 2500,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['Gold', 'Black', 'White']
-//   },
-//   {
-//     model: 'IIIII',
-//     brand: 'Hyundai',
-//     location: 'Kon Kaen',
-//     price: 1300,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['Red', 'Blue', 'Silver']
-//   },
-//   {
-//     model: 'JJJJJ',
-//     brand: 'Kia',
-//     location: 'Bangkok',
-//     price: 1600,
-//     image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-//     colors: ['White', 'Green', 'Black']
-//   }
+// Sample car data
+const cars: CarData[] = [
+  {
+    model: 'AAAAA',
+    brand: 'Toyota',
+    location: 'Bangkok',
+    price: 1000,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['Red', 'Green', 'Blue']
+  },
+  {
+    model: 'BBBB',
+    brand: 'BMW',
+    location: 'Bangkok',
+    price: 1500,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['Silver', 'Gold', 'Blonde']
+  },
+  {
+    model: 'CCCCCC',
+    brand: 'Nissan',
+    location: 'Bangkok',
+    price: 2000,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['Red', 'Green', 'Blue']
+  },
+  {
+    model: 'DDDDD',
+    brand: 'Honda',
+    location: 'Chiang Mai',
+    price: 2000,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['Black', 'White', 'Gray']
+  },
+  {
+    model: 'EEEEE',
+    brand: 'Mazda',
+    location: 'Chiang Mai',
+    price: 2000,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['Blue', 'Yellow', 'Orange']
+  },
+  {
+    model: 'FFFFF',
+    brand: 'Ford',
+    location: 'Phuket',
+    price: 2000,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['Red', 'White', 'Black']
+  },
+  {
+    model: 'GGGGG',
+    brand: 'Chevrolet',
+    location: 'Phuket',
+    price: 1700,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['Gray', 'Silver', 'Green']
+  },
+  {
+    model: 'HHHHH',
+    brand: 'Mercedes',
+    location: 'Kon Kaen',
+    price: 2500,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['Gold', 'Black', 'White']
+  },
+  {
+    model: 'IIIII',
+    brand: 'Hyundai',
+    location: 'Kon Kaen',
+    price: 1300,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['Red', 'Blue', 'Silver']
+  },
+  {
+    model: 'JJJJJ',
+    brand: 'Kia',
+    location: 'Bangkok',
+    price: 1600,
+    image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
+    colors: ['White', 'Green', 'Black']
+  }
 ];
 
 export type CarData = {
-  brand: string;
-  carstatus: string;
-  city: string;
-  color: string[];
-  created_at: string;
-  description: string;
-  id: number;
   model: string;
-  rate: number;
+  brand: string;
+  location: string;
+  price: number;
+  image: string;
+  colors: string[];
 };
 
 type AvailableCarsRouteProp = RouteProp<{
   AvailableCars: { 
     location: string; 
     pickupDate: string; 
-    dropoffDate: string;
-    cars: CarData[];
+    dropoffDate: string 
   };
 }, 'AvailableCars'>;
 
@@ -116,7 +112,7 @@ const AvailableCarsScreen = ({ navigation }: ProfileProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const route = useRoute<AvailableCarsRouteProp>();
-  const { location, pickupDate, dropoffDate, cars } = route.params;
+  const { location, pickupDate, dropoffDate } = route.params;
   
 
   // Filter cars based on search query (brand or model)

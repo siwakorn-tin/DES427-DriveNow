@@ -35,20 +35,18 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator>
             <>
-              {/* <Stack.Screen name="Login">
+              <Stack.Screen name="Login">
                 {(props) => <LoginScreen {...props} session={session} />}
               </Stack.Screen>
               <Stack.Screen name="Signup">
                 {(props) => <SignupScreen {...props} session={session} />}
-              </Stack.Screen> */}
+              </Stack.Screen>
               <Stack.Screen name="Home">
                 {(props) => <HomeScreen {...props} session={session} />}
               </Stack.Screen>
               <Stack.Screen name="Profile">
                 {(props) => <AboutScreen {...props} session={session} />}
               </Stack.Screen>
-              
-              {/* New */}
               <Stack.Screen name="Available">
                 {(props) => <AvailableCarsScreen {...props} session={session} />}
               </Stack.Screen>
@@ -58,7 +56,6 @@ export default function App() {
               <Stack.Screen name="History">
                 {(props) => <RentalHistoryScreen {...props} session={session} />}
               </Stack.Screen>
-
               <Stack.Screen name="Search">
                 {(props) => (
                   <CarRentalSearchScreen {...props} session={session} />

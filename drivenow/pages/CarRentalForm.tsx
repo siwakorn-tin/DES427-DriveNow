@@ -17,25 +17,10 @@ type RootStackParamList = {
   };
 };
 
-// type CarRentalFormNavigationProp = NavigationProp<{
-//   Confirmation: {
-//     carModel: string,
-//     brandName: string,
-//     color: string
-//     location: string,
-//     pickupDate: string,
-//     dropoffDate: string,
-//     price: number,
-//     name: string,
-//     driverLicense: string,
-//   };
-// }>;
-
 type CarRentalFormScreenRouteProp = RouteProp<RootStackParamList, 'CarRentalForm'>;
 
 const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
   const route = useRoute<CarRentalFormScreenRouteProp>();
-  // const navigation = useNavigation<CarRentalFormNavigationProp>();
   const { car, location, pickupDate, dropoffDate } = route.params;
   const [selectedColor, setSelectedColor] = React.useState<string>("");
   const [name, setName] = React.useState<string>("");
@@ -63,6 +48,7 @@ const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
   
     navigation.navigate('Confirmation', {
       carModel: car.model,
+      carImage: car.image,
       brandName: car.brand,
       color: selectedColor,
       location,
