@@ -20,7 +20,7 @@ navigation,session
       >
         Go to Profile
       </Button>
-      <Button
+      {/* <Button
         onPress={() => navigation.navigate("Login")}
         size="$3"
         theme="active"
@@ -28,7 +28,7 @@ navigation,session
         backgroundColor={"$blue11Dark"}
       >
         Go to Login
-      </Button>
+      </Button> */}
       <Button
         onPress={() => navigation.navigate("Search")}
         size="$3"
@@ -38,7 +38,7 @@ navigation,session
       >
         Go to Car Rental Search
       </Button>
-      <Button
+      {/* <Button
         onPress={() => navigation.navigate("Confirmation")}
         size="$3"
         theme="active"
@@ -46,7 +46,7 @@ navigation,session
         backgroundColor={"$blue11Dark"}
       >
         Go to Car Rental Confirmation
-      </Button>
+      </Button> */}
       <Button
         onPress={() => navigation.navigate("History")}
         size="$3"

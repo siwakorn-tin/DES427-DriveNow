@@ -7,6 +7,8 @@ import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { ProfileProps } from "../types/session";
+import useUserData from "../hooks/useUserData";
+import { UserData } from "../types/userData";
 
 type RootStackParamList = {
   CarRentalForm: { 
@@ -14,18 +16,20 @@ type RootStackParamList = {
     location: string; 
     pickupDate: string; 
     dropoffDate: string
+    user: UserData
   };
 };
 
 type CarRentalFormScreenRouteProp = RouteProp<RootStackParamList, 'CarRentalForm'>;
 
-const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
+const CarRentalFormScreen: React.FC<ProfileProps> = ({ navigation, session }) => {
+  // const { data, loading } = useUserData(session);
   const route = useRoute<CarRentalFormScreenRouteProp>();
-  const { car, location, pickupDate, dropoffDate } = route.params;
+  const { car, location, pickupDate, dropoffDate, user } = route.params;
   const [selectedColor, setSelectedColor] = React.useState<string>("");
   const [name, setName] = React.useState<string>("");
   const [driverLicense, setDriverLicense] = React.useState<string>("");
-  
+
   const colorOption = car.colors ? car.colors.map((color) => ({ title: color })) : [];
 
   // Function to calculate the rental duration in days
@@ -41,8 +45,8 @@ const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
   const totalPrice = duration * car.price;
 
   const handleContinue = () => {
-    if (!selectedColor || !name || !driverLicense) {
-      Alert.alert("Missing Fields", "Please fill in all fields.");
+    if (!selectedColor) {
+      Alert.alert(`Missing Fields", "Please fill in all fields. ${session?.user.email}`);
       return;
     }
   
@@ -55,8 +59,8 @@ const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
       pickupDate,
       dropoffDate,
       price: totalPrice,
-      name: name,
-      driverLicense: driverLicense
+      fullname: user.fullname,
+      license_number: user.license_number,
     });
   };
 
@@ -104,7 +108,7 @@ const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
       <Text fontSize="$5" fontWeight="600" marginBottom="$2">
         Date
       </Text>
-      <XStack space="$2" marginBottom="$4">
+      <XStack gap="$2" marginBottom="$4">
         <Input
           value={pickupDate}
           editable={false}
@@ -205,8 +209,8 @@ const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
         Your Information
       </Text>
       <Input
-        value={name}
-        onChangeText={setName}
+        value={user.fullname}
+        editable={false}
         placeholder="Name"
         borderWidth={0}
         borderRadius="$10"
@@ -218,8 +222,8 @@ const CarRentalFormScreen = ({ navigation, session }: ProfileProps) => {
         fontSize="$4"
       />
       <Input
-        value={driverLicense} 
-        onChangeText={setDriverLicense}
+        value={user.license_number} 
+        editable={false}
         placeholder="Driver License"
         borderWidth={0}
         borderRadius="$10"
