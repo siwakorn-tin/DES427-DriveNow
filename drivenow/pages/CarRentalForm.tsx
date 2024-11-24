@@ -6,6 +6,9 @@ import SelectDropdown from "react-native-select-dropdown";
 import { StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { useRoute, RouteProp} from "@react-navigation/native";
 import { ProfileProps } from "../types/session";
+import useUserData from "../hooks/useUserData";
+import { UserData } from "../types/userData";
+import { createRentals } from "../utils/api";
 
 
 type RootStackParamList = {
@@ -14,21 +17,18 @@ type RootStackParamList = {
     location: string; 
     pickupDate: string; 
     dropoffDate: string
+    user: UserData
   };
 };
 
 type CarRentalFormScreenRouteProp = RouteProp<RootStackParamList, 'CarRentalForm'>;
 
-const CarRentalFormScreen = ({ navigation }: ProfileProps) => {
+const CarRentalFormScreen: React.FC<ProfileProps> = ({ navigation, session }) => {
   const route = useRoute<CarRentalFormScreenRouteProp>();
-  const { car, location, pickupDate, dropoffDate } = route.params;
-  // const [selectedColor, setSelectedColor] = React.useState<string>("");
+  const { car, location, pickupDate, dropoffDate, user } = route.params;
   const [name, setName] = React.useState<string>("");
   const [driverLicense, setDriverLicense] = React.useState<string>("");
-  
-  // const colorOption = car.colors ? car.colors.map((color) => ({ title: color })) : [];
 
-  // Function to calculate the rental duration in days
   const calculateDuration = (pickup: string, dropoff: string): number => {
     const pickupDateObj = new Date(pickup);
     const dropoffDateObj = new Date(dropoff);
@@ -40,18 +40,48 @@ const CarRentalFormScreen = ({ navigation }: ProfileProps) => {
   const duration = calculateDuration(pickupDate, dropoffDate);
   const totalPrice = duration * car.rate;
 
-  const handleContinue = () => {
-    if ( !name || !driverLicense ) {
-      Alert.alert("Missing Fields", "Please fill in all fields.");
-      return;
-    }
+  const rentalDuration = (
+    (new Date(dropoffDate).getTime() - new Date(pickupDate).getTime()) /
+    (1000 * 3600 * 24)
+  ).toFixed(0);
+
+  const handleConfirmBooking = async () => {
+    try {
+      const rentalData = await createRentals({
+        session,
+        carID: car.id,
+        startDate: pickupDate,
+        endDate: dropoffDate,
+      });
   
-    navigation.navigate('Confirmation', {
-      car: car,
-      name: name,
-      driverLicense: driverLicense
-    });
+      if (rentalData?.error) {
+        Alert.alert("Error", rentalData.error);
+        return;
+      }
+  
+      if (rentalData?.success) {
+        Alert.alert("Success", "Booking confirmed successfully");
+        navigation.navigate("Home");
+      }
+    } catch (error) {
+      console.error("Error confirming booking", error);
+      Alert.alert("Error", "An unexpected error occurred. Please try again.");
+    }
   };
+
+  // No Confirmation Page
+  // const handleContinue = () => {
+  
+  //   navigation.navigate('Confirmation', {
+  //     car: car,
+  //     location,
+  //     pickupDate,
+  //     dropoffDate,
+  //     price: totalPrice,
+  //     fullname: user.fullname,
+  //     license_number: user.license_number,
+  //   });
+  // };
 
   return (
     <ScrollView>
@@ -97,7 +127,7 @@ const CarRentalFormScreen = ({ navigation }: ProfileProps) => {
       <Text fontSize="$5" fontWeight="600" marginBottom="$2">
         Date
       </Text>
-      <XStack space="$2" marginBottom="$4">
+      <XStack gap="$2" marginBottom="$4">
         <Input
           value={pickupDate}
           editable={false}
@@ -123,6 +153,25 @@ const CarRentalFormScreen = ({ navigation }: ProfileProps) => {
           fontSize="$4"
         />
       </XStack>
+
+      <Text fontSize="$5" fontWeight="600" marginBottom="$2">
+        Duration
+      </Text>
+
+      <Input
+        value={`${duration} Days`}
+        editable={false}
+        borderWidth={0}
+        borderColor="$gray7"
+        borderRadius="$10"
+        paddingHorizontal="$3"
+        marginBottom="$4"
+        bg="$gray3"
+        height="60"
+        paddingInline="$4"
+        fontSize="$4"
+      />
+
       <Text fontSize="$5" fontWeight="600" marginBottom="$2">
         Total Price
       </Text>
@@ -163,8 +212,8 @@ const CarRentalFormScreen = ({ navigation }: ProfileProps) => {
         Your Information
       </Text>
       <Input
-        value={name}
-        onChangeText={setName}
+        value={user.fullname}
+        editable={false}
         placeholder="Name"
         borderWidth={0}
         borderRadius="$10"
@@ -176,8 +225,8 @@ const CarRentalFormScreen = ({ navigation }: ProfileProps) => {
         fontSize="$4"
       />
       <Input
-        value={driverLicense} 
-        onChangeText={setDriverLicense}
+        value={user.license_number} 
+        editable={false}
         placeholder="Driver License"
         borderWidth={0}
         borderRadius="$10"
@@ -200,9 +249,9 @@ const CarRentalFormScreen = ({ navigation }: ProfileProps) => {
           marginTop="$4"
           height="60"
           width="100%"
-          onPress={handleContinue}
+          onPress={handleConfirmBooking}
         >
-          Continue to Book
+          Confirm Booking
         </Button>
     </YStack>
     </ScrollView>

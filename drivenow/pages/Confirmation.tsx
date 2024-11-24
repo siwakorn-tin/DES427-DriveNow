@@ -22,8 +22,8 @@ type CarRentalRouteProp = RouteProp<
     pickupDate: string;
     dropoffDate: string;
     price: number;
-    name: string;
-    driverLicense: string;
+    fullname: string;
+    license_number: string;
   };
   },
   'CarRentalConfirmation'
@@ -40,8 +40,8 @@ const CarRentalConfirmation: React.FC <ProfileProps>= ({navigation,session}) => 
     pickupDate,
     dropoffDate,
     price,
-    name,
-    driverLicense,
+    fullname,
+    license_number,
   } = route.params;
 
   return (
@@ -85,10 +85,10 @@ const CarRentalConfirmation: React.FC <ProfileProps>= ({navigation,session}) => 
         </Text>
         </Text>
         <Text style={styles.detailText}>
-          <Text style={styles.label}>Name:</Text> {name}
+          <Text style={styles.label}>Name:</Text> {fullname}
         </Text>
         <Text style={styles.detailText}>
-          <Text style={styles.label}>Driver License:</Text> {driverLicense}
+          <Text style={styles.label}>Driver License:</Text> {license_number}
         </Text>
         <TextInput
           style={styles.priceInput}

@@ -5,57 +5,58 @@ import { useRoute, RouteProp } from '@react-navigation/native';
 import CarBox from '../components/CarBox';
 import { FontAwesome } from '@expo/vector-icons';
 import { ProfileProps } from "../types/session";
+import useUserData from "../hooks/useUserData";
 
-const cars: CarData[] = [
-  {
-    id: 1,
-    model: 'Model A',
-    brand: 'Toyota',
-    city: 'Bangkok',
-    color: 'Red',
-    created_at: '2024-11-24',
-    description: 'A red Toyota Model A.',
-    rate: 1000,
-    carstatus: 'Available',
-    image: 'https://link-to-image.com/toyota-model-a.jpg'
-  },
-  {
-    id: 2,
-    model: 'Model B',
-    brand: 'Toyota',
-    city: 'Bangkok',
-    color: 'Blue',
-    created_at: '2024-11-24',
-    description: 'A blue Toyota Model B.',
-    rate: 1200,
-    carstatus: 'Available',
-    image: 'https://link-to-image.com/toyota-model-b.jpg'
-  },
-  {
-    id: 3,
-    model: 'Model A',
-    brand: 'BMW',
-    city: 'Chiang Mai',
-    color: 'Black',
-    created_at: '2024-11-24',
-    description: 'A black BMW Model A.',
-    rate: 1500,
-    carstatus: 'Available',
-    image: 'https://link-to-image.com/bmw-model-a.jpg'
-  },
-  {
-    id: 4,
-    model: 'Model A',
-    brand: 'Toyota',
-    city: 'Bangkok',
-    color: 'Blue',
-    created_at: '2024-11-24',
-    description: 'A blue Toyota Model A.',
-    rate: 1000,
-    carstatus: 'Available',
-    image: 'https://link-to-image.com/toyota-model-a.jpg'
-  },
-];
+// const cars: CarData[] = [
+//   {
+//     id: 1,
+//     model: 'Model A',
+//     brand: 'Toyota',
+//     city: 'Bangkok',
+//     color: 'Red',
+//     created_at: '2024-11-24',
+//     description: 'A red Toyota Model A.',
+//     rate: 1000,
+//     carstatus: 'Available',
+//     image: 'https://link-to-image.com/toyota-model-a.jpg'
+//   },
+//   {
+//     id: 2,
+//     model: 'Model B',
+//     brand: 'Toyota',
+//     city: 'Bangkok',
+//     color: 'Blue',
+//     created_at: '2024-11-24',
+//     description: 'A blue Toyota Model B.',
+//     rate: 1200,
+//     carstatus: 'Available',
+//     image: 'https://link-to-image.com/toyota-model-b.jpg'
+//   },
+//   {
+//     id: 3,
+//     model: 'Model A',
+//     brand: 'BMW',
+//     city: 'Chiang Mai',
+//     color: 'Black',
+//     created_at: '2024-11-24',
+//     description: 'A black BMW Model A.',
+//     rate: 1500,
+//     carstatus: 'Available',
+//     image: 'https://link-to-image.com/bmw-model-a.jpg'
+//   },
+//   {
+//     id: 4,
+//     model: 'Model A',
+//     brand: 'Toyota',
+//     city: 'Bangkok',
+//     color: 'Blue',
+//     created_at: '2024-11-24',
+//     description: 'A blue Toyota Model A.',
+//     rate: 1000,
+//     carstatus: 'Available',
+//     image: 'https://link-to-image.com/toyota-model-a.jpg'
+//   },
+// ];
 
 export type CarData = {
   brand: string;
@@ -75,16 +76,17 @@ type AvailableCarsRouteProp = RouteProp<{
     location: string; 
     pickupDate: string; 
     dropoffDate: string;
-    // cars: CarData[];
+    cars: CarData[];
   };
 }, 'AvailableCars'>;
 
-const AvailableCarsScreen = ({ navigation }: ProfileProps) => {
+const AvailableCarsScreen = ({ navigation, session }: ProfileProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
+  const { data: user, loading } = useUserData(session);
   const route = useRoute<AvailableCarsRouteProp>();
-  const { location, pickupDate, dropoffDate } = route.params;
-  // const { location, pickupDate, dropoffDate, cars } = route.params;
+  // const { location, pickupDate, dropoffDate } = route.params;
+  const { location, pickupDate, dropoffDate, cars } = route.params;
 
   const filteredCars = cars.filter((car) => {
     const searchTerms = searchQuery.toLowerCase().replace(/\s+/g, '').split(''); // Remove spaces and split into terms
@@ -102,7 +104,8 @@ const AvailableCarsScreen = ({ navigation }: ProfileProps) => {
       car, 
       location, 
       pickupDate, 
-      dropoffDate
+      dropoffDate,
+      user,
     });
   };
 

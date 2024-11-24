@@ -72,26 +72,41 @@ export const createRentals = async ({
   startDate: string;
   endDate: string;
 }) => {
-  const checkRental = await supabase
-    .from("rental")
-    .select()
-    .eq("car_id", carID)
-    .or("status.eq.ongoing, status.eq.payment")
-    .gte("returned_date", startDate)
-    .lte("rented_date", endDate)
-    .single();
-  if (checkRental && checkRental.data && checkRental.data.id)
-    return { error: "Car is already rented for this period" };
-  await supabase.from("rental").insert([
-    {
-      user_id: Number(session.user.id),
-      expected_returned_date: endDate,
-      car_id: carID,
-      rented_date: startDate,
-      returned_date: endDate,
-      status: "payment",
-    },
-  ]);
+  try {
+    const checkRental = await supabase
+      .from("rental")
+      .select()
+      .eq("car_id", carID)
+      .or("status.eq.ongoing,status.eq.payment")
+      .gte("returned_date", startDate)
+      .lte("rented_date", endDate)
+      .single();
+
+    if (checkRental && checkRental.data && checkRental.data.id) {
+      return { error: "Car is already rented for this period" };
+    }
+
+    const { error } = await supabase.from("rental").insert([
+      {
+        user_id: Number(session.user.id),
+        expected_returned_date: endDate,
+        car_id: carID,
+        rented_date: startDate,
+        returned_date: endDate,
+        status: "payment",
+      },
+    ]);
+
+    if (error) {
+      console.error("Error inserting rental:", error);
+      return { error: "Failed to create rental" };
+    }
+
+    return { success: true }; // Indicate success
+  } catch (error) {
+    console.error("Error in createRentals:", error);
+    return { error: "An unexpected error occurred" };
+  }
 };
 export const getRentalHistory = async ({ session }: { session: Session }) => {
   const { data, error } = await supabase

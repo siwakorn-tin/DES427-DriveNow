@@ -1,70 +1,73 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
-import { YStack, View } from 'tamagui';
-import CarBox from '../components/CarBox';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, Text, View } from 'react-native';
+import { getRentalHistory } from "../utils/api";
 import { ProfileProps } from "../types/session";
 
 type RentalData = {
-  model: string;
-  brand: string;
-  location: string;
-  price: number;
-  image: string;
-  color: string;
-  rentalDates: string;
+  car_id: number;
+  expected_returned_date: string;
+  id: number;
+  rented_date: string;
+  returned_date: string;
+  status: string;
+  user_id: number;
 };
 
-const rentals: RentalData[] = [
-    {
-      model: 'Model',
-      brand: 'Name of Brand',
-      location: 'Bangkok',
-      price: 1000,
-      image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-      color: 'Orange',
-      rentalDates: '01/12/24 - 03/12/24',
-    },
-    {
-        model: 'Model',
-        brand: 'Name of Brand',
-        location: 'Bangkok',
-        price: 1000,
-        image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-        color: 'Orange',
-        rentalDates: '01/12/24 - 03/12/24',   
-    },
-    {
-        model: 'Model',
-        brand: 'Name of Brand',
-        location: 'Bangkok',
-        price: 1000,
-        image: 'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg',
-        color: 'Orange',
-        rentalDates: '01/12/24 - 03/12/24',   
-    }
-];
+export default function RentalHistoryScreen({ navigation, session }: ProfileProps) {
+  const [rentals, setRentals] = useState<RentalData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-export default function RentalHistoryScreen({ navigation, session }: ProfileProps){
-    return (
-        <View bg="white">
+  const fetchRentals = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const history = await getRentalHistory({ session });
+      if (history) {
+        setRentals(history);
+      } else {
+        setError("No rental history found.");
+      }
+    } catch (err) {
+      setError("Failed to fetch rental history. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRentals();
+  }, []);
+
+  return (
+    <View style={{ flex: 1, backgroundColor: 'white', padding: 16 }}>
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : error ? (
+        <Text style={{ color: 'red' }}>{error}</Text>
+      ) : rentals.length === 0 ? (
+        <Text>No rentals found</Text>
+      ) : (
         <ScrollView>
-        <YStack paddingBlock="$6" paddingInline="$5">
           {rentals.map((rental, index) => (
-            <CarBox
+            <View
               key={index}
-              model={rental.model}
-              brand={rental.brand}
-              location={rental.location}
-              price={rental.price}
-              image={rental.image}
-              color={rental.color}
-              rentalDates={rental.rentalDates}
-              isClickable={false}
-            />
+              style={{
+                padding: 12,
+                marginBottom: 12,
+                borderBottomWidth: 1,
+                borderColor: '#eee',
+              }}
+            >
+              <Text style={{ fontWeight: 'bold' }}>Car ID: {rental.car_id}</Text>
+              <Text>Status: {rental.status}</Text>
+              <Text>Rented Dates: {rental.rented_date} - {rental.returned_date}</Text>
+              <Text>Expected Return: {rental.expected_returned_date}</Text>
+            </View>
           ))}
-        </YStack>
-      </ScrollView>
-      </View>
-    );
+        </ScrollView>
+      )}
+    </View>
+  );
 }
 

@@ -61,11 +61,6 @@ const CarRentalSearch: React.FC<ProfileProps> = ({ navigation, session }) => {
       Alert.alert("Missing Fields", "Please fill in all fields.");
       return;
     }
-
-    Alert.alert(
-      "Search Submitted",
-      `Searching for rentals at ${pickupLocation} on ${pickupDate} to ${dropoffDate}`
-    );
     const cars = await searchAvailableCars({
       city: pickupLocation,
       startDate: pickupDate,
@@ -77,7 +72,7 @@ const CarRentalSearch: React.FC<ProfileProps> = ({ navigation, session }) => {
       location: pickupLocation,
       pickupDate: pickupDate,
       dropoffDate: dropoffDate,
-      // cars: cars,
+      cars: cars,
     });
   };
 
