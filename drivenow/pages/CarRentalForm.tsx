@@ -82,7 +82,8 @@ const CarRentalFormScreen: React.FC<ProfileProps> = ({ navigation, session }) =>
         {car.brand}
       </Text>
       <Image
-        src={car.image}
+        src={'https://t3.ftcdn.net/jpg/06/50/57/76/360_F_650577635_GesSMihkw3BjAVXDAKcLeaC8Ec8yUbTq.jpg'}
+        // src={car.image}
         width="100%"
         height={200}
         resizeMode="contain"
