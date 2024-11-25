@@ -180,7 +180,7 @@ const CarRentalFormScreen: React.FC<ProfileProps> = ({ navigation, session }) =>
 
       {/* Option Field */}
       <Text fontSize="$5" fontWeight="600" marginBottom="$2">
-        Color Option
+        Color
       </Text>
       <Input
           value={car.color}

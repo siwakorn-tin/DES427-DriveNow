@@ -76,6 +76,15 @@ const CarRentalSearch: React.FC<ProfileProps> = ({ navigation, session }) => {
     });
   };
 
+  const getMinimumDate = () => {
+    if (currentPicker === "pickup") {
+      return new Date();
+    } else if (currentPicker === "dropoff") {
+      return pickupDate ? new Date(new Date(pickupDate).getTime() + 24 * 60 * 60 * 1000) : new Date();
+    }
+    return undefined;
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -164,6 +173,7 @@ const CarRentalSearch: React.FC<ProfileProps> = ({ navigation, session }) => {
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
+        minimumDate={getMinimumDate()}
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
         textColor="black" // Set text color to black
