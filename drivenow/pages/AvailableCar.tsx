@@ -36,14 +36,24 @@ const AvailableCarsScreen = ({ navigation, session }: ProfileProps) => {
   const route = useRoute<AvailableCarsRouteProp>();
   const { location, pickupDate, dropoffDate, cars } = route.params;
 
-  const filteredCars = cars.filter((car) => {
+  const filteredCars = cars
+  .filter((car) => {
     const searchTerms = searchQuery.toLowerCase().replace(/\s+/g, '').split('');
     const carString = `${car.brand} ${car.model} ${car.color}`.toLowerCase().replace(/\s+/g, '');
-  
+
     return (
       car.city.toLowerCase().replace(/\s+/g, '') === location.toLowerCase().replace(/\s+/g, '') &&
       searchTerms.every((term) => carString.includes(term))
     );
+  })
+  .sort((a, b) => {
+    // Sort first by brand alphabetically
+    const brandComparison = a.brand.localeCompare(b.brand);
+    if (brandComparison !== 0) {
+      return brandComparison;
+    }
+    // If brands are the same, sort by model alphabetically
+    return a.model.localeCompare(b.model);
   });
   
   

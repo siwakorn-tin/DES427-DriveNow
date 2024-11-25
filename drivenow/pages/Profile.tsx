@@ -1,23 +1,31 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { Session } from "@supabase/supabase-js";
-import { getUser } from "../utils/user";
-import { NavigationProp } from "@react-navigation/native";
-import useUserData from "../hooks/useUserData";
 import { ProfileProps } from "../types/session";
+import useUserData from "../hooks/useUserData";
 
 const ProfileScreen: React.FC<ProfileProps> = ({ navigation, session }) => {
   if (!session) {
     return <Text>Not logged in</Text>;
   }
+  
   const { data, loading } = useUserData(session);
 
   if (loading || !data) {
     return <Text>Loading...</Text>;
   }
+
+  const getInitial = (name: string) => {
+    return name ? name.charAt(0).toUpperCase() : "?";
+  };
+
   return (
+    <View style={styles.screen}>
     <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.avatarContainer}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>{getInitial(data.fullname)}</Text>
+        </View>
+      </View>
       <Text style={styles.header}>Profile Details</Text>
       <View style={styles.card}>
         <Text style={styles.label}>Full Name:</Text>
@@ -36,54 +44,56 @@ const ProfileScreen: React.FC<ProfileProps> = ({ navigation, session }) => {
         <Text style={styles.value}>{data.user_id || "N/A"}</Text>
       </View>
     </ScrollView>
+    </View>
   );
 };
 
-
 const styles = StyleSheet.create({
+  screen:{
+    backgroundColor: "white",
+    height: "100%",
+  },
   container: {
     padding: 16,
-    backgroundColor: "#f5f5f5",
   },
-  centeredContainer: {
-    flex: 1,
+  avatarContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+  },
+  avatarText: {
+    color: "#fff",
+    fontSize: 40,
+    fontWeight: "bold",
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 16,
     textAlign: "center",
-    color: "#333",
   },
   card: {
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 30,
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: "#f8f9fa",
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
   },
   label: {
-    fontSize: 10,
-    color: "#555",
-    marginBottom: 4,
+    fontSize: 14,
+    color: "#6c757d",
   },
   value: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
-    color: "#000",
-  },
-  errorText: {
-    fontSize: 18,
-    color: "red",
-  },
-  loadingText: {
-    fontSize: 18,
-    color: "#333",
   },
 });
 
